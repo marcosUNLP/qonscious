@@ -7,3 +7,4 @@ notebooks_private
 .DS_Store
 .vscode/*
 .idea/
+.pytest_cache/
