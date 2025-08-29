@@ -16,14 +16,14 @@ In the NISQ era, quantum hardware is noisy, resource-limited, and variable over 
 - Composable constraints (AND, OR, NOT)
 - Built-in logging, extensibility, and fallback logic
 
-## Seting up dependenies
+## Seting up dependencies
 
 We recommend working on a python virtual environment. 
 
 ```bash
 python3 -m venv .venv # create the venv
 source .venv/bin/activate # activate it
-pip install openai # to manually install a dependency
+pip install ... # to manually install a dependency
 pip freeze > requirements.txt # to update or create the requirements.txt file
 pip install -r requirements.txt # to install all dependencies from requirements.txt
 ```
