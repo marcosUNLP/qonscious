@@ -1,5 +1,14 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from qiskit import QuantumCircuit
-from qonscious.core import AerSamplerAdapter
+
+from qonscious.adapters.aer_sampler_adapter import AerSamplerAdapter
+
+if TYPE_CHECKING:
+    from qonscious.core.types import ExperimentResult
+
 
 def test_aer_sampler_basic_run():
     qc = QuantumCircuit(2)
@@ -8,21 +17,27 @@ def test_aer_sampler_basic_run():
     qc.measure_all()
 
     adapter = AerSamplerAdapter()
-    result = adapter.run(qc, shots=1024)
+    result: ExperimentResult = adapter.run(qc, shots=1024)
 
     # Check result is a dict with expected keys
     assert isinstance(result, dict)
-    assert set(result.keys()) >= {"counts", "backend", "timestamps", "raw"}
+    assert set(result.keys()) >= {
+        "counts",
+        "shots",
+        "timestamps",
+        "raw_results",
+        "backend_properties",
+    }
 
     # Validate counts format
     counts = result["counts"]
     assert isinstance(counts, dict)
-    assert all(isinstance(k, str) and len(k) == 2 for k in counts.keys())
+    assert all(isinstance(k, str) and len(k) == 2 for k in counts)
     assert all(isinstance(v, int) and v >= 0 for v in counts.values())
     assert sum(counts.values()) == 1024
 
     # Validate backend name
-    assert result["backend"] == "aer_simulator"
+    assert result["backend_properties"]["name"] == "aer_simulator"
 
     # Validate timestamps
     timestamps = result["timestamps"]

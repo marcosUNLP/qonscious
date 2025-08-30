@@ -1,27 +1,68 @@
-from typing import TypedDict, Optional, Any, Dict
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, TypedDict
+
+if TYPE_CHECKING:
+    from typing import Any
 
 
-class BackendRunResult(TypedDict):
+class ExperimentResult(TypedDict):
     """
     Unified structure returned by any BackendAdapter.run() call.
 
     Attributes:
         counts: Dictionary mapping bitstring keys to integer counts.
-        backend: Name of the backend used to run the circuit.
         shots: The number of shots in the job that generated this result
+        backend_properties: dictionary with various properties describing the backend used to run the circuit.
         timestamps: Optional dictionary with ISO timestamps for
                     'created', 'running', 'finished'.
-        raw: Backend-specific result object (e.g., SamplerResult or JobResult).
+        raw_results: Backend-specific result object (e.g., SamplerResult or JobResult).
     """
-    counts: Dict[str, int]
-    backend: str
-    shots: int
-    timestamps: Optional[Dict[str, str]]
-    raw: Any
 
-class PackedCHSHResult(BackendRunResult):
-    CHSH_score: float
-    E00: float
-    E01: float
-    E10: float
-    E11: float
+    counts: dict[str, int]
+    shots: int
+    backend_properties: dict[str, str]
+    timestamps: dict[str, str]
+    raw_results: Any | None
+
+
+class FigureOfMeritResult(TypedDict):
+    """
+    Unified structure returned by any FigureOfMerit evaluation.
+    For now, speficis types of figures of merit will store their results in the properties dictionary.
+    Refer to the documentation of each figure of merit for details.
+    They can eventually subclass this class to better support type-checking and documentation.
+
+    Attributes:
+        experiment_result: The ExperimentResult used to compute the figure of merit (if any).
+        properties: dictionary with various properties describing the result.
+    """
+
+    experiment_result: ExperimentResult | None
+    properties: dict[str, Any] | None
+
+
+class ScorableFigureOfMeritResult(FigureOfMeritResult):
+    """
+    Extension of FigureOfMeritResult for figures of merit that can be scored.
+
+    Attributes:
+        score: Numerical score assigned to the figure of merit result.
+    """
+
+    score: float
+
+
+class QonsciousResult(TypedDict):
+    """
+    Unified structure returned by the QonsciousRunner run method.
+
+    Attributes:
+        contition: String describing the condition under which the run executed (for now only fail/pass).
+        experiment_result: ExperimentResult that was obtained in this run.
+        figures_of_merit_results: FigureOfMeritResults that were considered in this run.
+    """
+
+    condition: str
+    experiment_result: ExperimentResult
+    figures_of_merit_results: list[FigureOfMeritResult] | None
