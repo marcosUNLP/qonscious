@@ -1,13 +1,21 @@
 from qiskit_ibm_runtime import SamplerV2 as Sampler
+from qiskit_ibm_runtime import QiskitRuntimeService
 from qiskit import QuantumCircuit, transpile
+from typing_extensions import Self
 from .backend_adapter import BackendAdapter
 from .types import BackendRunResult
+
 
 class IBMSamplerAdapter(BackendAdapter):
 
     def __init__(self, backend):
         self.backend = backend
 
+    @classmethod
+    def least_busy_backend(cls, token) -> Self :
+        """Simply provide your IBM Quantum token to get an adaptor on the least busy backend."""
+        service = QiskitRuntimeService(channel="ibm_quantum_platform", token=token)
+        return cls(service.least_busy(operational=True, simulator=False))
     
     def extract_counts(this, result) -> dict:
         data = result[0].data
