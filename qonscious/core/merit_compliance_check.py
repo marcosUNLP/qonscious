@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from typing import Callable, Optional
+    from typing import Callable
 
     from qonscious.adapters.backend_adapter import BackendAdapter
     from qonscious.core.types import FigureOfMeritResult
@@ -18,8 +18,8 @@ class MeritComplianceCheck:
 
     def __init__(
         self,
-        figure_of_merit: Optional[FigureOfMerit] = None,
-        decision_function: Callable[[Optional[FigureOfMeritResult]], bool] = lambda _: True,
+        figure_of_merit: FigureOfMerit | None = None,
+        decision_function: Callable[[FigureOfMeritResult | None], bool] = lambda _: True,
     ):
         self.figure_of_merit = figure_of_merit
         self.decision_function = decision_function
