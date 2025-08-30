@@ -16,9 +16,7 @@ def test_ibm_sampler_adapter_basic_run():
 
     load_dotenv()
     ibm_token = os.getenv("IBM_QUANTUM_TOKEN")
-    service = QiskitRuntimeService(channel="ibm_quantum", token=ibm_token)
-    backend = service.least_busy(operational=True, simulator=False)
-    adapter = IBMSamplerAdapter(backend)
+    adapter = IBMSamplerAdapter.least_busy_backend(ibm_token)
 
     # Run
     result = adapter.run(qc, shots=512)
