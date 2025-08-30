@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qonscious"
+version = "0.1.0"
+description = "Qonscious is a runtime framework designed to support conditional execution of quantum circuits based on resource introspection. It helps you build quantum applications that are aware of backend conditions — such as entanglement, coherence, or fidelity — before execution."
+authors = [
+    { name = "Alejandro Fernandez", email = "casco@lifia.info.unlp.edu.ar" },
+    { name = "Federico Holik", email = "holik@fisica.unlp.edu.ar" },
+    { name = "MArcos Lammers", email = "mlammers@lifia.info.unlp.edu.ar" }
+]
+readme = "README.md"
+license = { text = "N/A" } 
+requires-python = ">=3.9"
+
+dependencies = [
+  "qiskit>=2.0,<3",
+  "qiskit-aer>=0.17",
+  "qiskit-ibm-runtime>=0.40",
+  "python-dotenv>=1.0",      
+]
+
+# load these with `pip install .[dev]` or `pip install .[notebooks]` or `pip install .[viz]`
+[project.optional-dependencies] 
+dev = [
+  "pytest>=8.4",
+  "ruff>=0.5",
+  "pyright",
+]
+notebooks = [
+  "ipykernel>=6.29",
+  "matplotlib>=3.9",
+  "pandas>=2.3",
+]
+viz = [
+  "graphviz>=0.20",
+  "pydeps>=1.12",            
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E","F","W","I","UP","B","SIM","TCH","TID"]
+per-file-ignores = { "qonscious/**/__init__.py" = ["F401"] }
+
+[tool.ruff.lint.isort]
+known-first-party = ["qonscious"]
+combine-as-imports = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["qonscious*"]
+exclude = ["tests*", "notebooks*", "notebooks_private*", "scripts*"]
