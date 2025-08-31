@@ -64,5 +64,5 @@ class QonsciousResult(TypedDict):
     """
 
     condition: str
-    experiment_result: ExperimentResult
+    experiment_result: ExperimentResult | None
     figures_of_merit_results: list[FigureOfMeritResult] | None

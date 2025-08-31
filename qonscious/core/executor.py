@@ -14,8 +14,8 @@ if TYPE_CHECKING:
 def run_conditionally(
     backend_adapter: BackendAdapter,
     checks: list[MeritComplianceCheck],
-    on_pass: Callable[[BackendAdapter, list[FigureOfMeritResult]], ExperimentResult],
-    on_fail: Callable[[BackendAdapter, list[FigureOfMeritResult]], ExperimentResult],
+    on_pass: Callable[[BackendAdapter, list[FigureOfMeritResult]], ExperimentResult | None],
+    on_fail: Callable[[BackendAdapter, list[FigureOfMeritResult]], ExperimentResult | None],
     **kwargs,
 ) -> QonsciousResult:
     """
