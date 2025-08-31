@@ -13,7 +13,8 @@ class ExperimentResult(TypedDict):
     Attributes:
         counts: Dictionary mapping bitstring keys to integer counts.
         shots: The number of shots in the job that generated this result
-        backend_properties: dictionary with various properties describing the backend used to run the circuit.
+        backend_properties: dictionary with various properties describing the backend
+                            used to run the circuit.
         timestamps: Optional dictionary with ISO timestamps for
                     'created', 'running', 'finished'.
         raw_results: Backend-specific result object (e.g., SamplerResult or JobResult).
@@ -34,12 +35,15 @@ class FigureOfMeritResult(TypedDict):
     They can eventually subclass this class to better support type-checking and documentation.
 
     Attributes:
-        experiment_result: The ExperimentResult used to compute the figure of merit (if any).
+        figure_of_merit: a string identifiying the FOM this results relates to
+                        (could be the FoM class name)
         properties: dictionary with various properties describing the result.
+        experiment_result: The ExperimentResult used to compute the figure of merit (if any).
     """
 
-    experiment_result: ExperimentResult | None
+    figure_of_merit: str
     properties: dict[str, Any] | None
+    experiment_result: ExperimentResult | None
 
 
 class ScorableFigureOfMeritResult(FigureOfMeritResult):

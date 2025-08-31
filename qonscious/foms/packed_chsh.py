@@ -19,6 +19,7 @@ class PackedCHSHTest(FigureOfMerit):
         run_result: ExperimentResult = backend_adapter.run(qc, shots=kwargs.get("shots", 1024))
         CHSH_Scores: dict = compute_parallel_CHSH_scores(run_result["counts"])
         evaluation_result: ScorableFigureOfMeritResult = {
+            "figure_of_merit": self.__class__.__name__,
             "properties": CHSH_Scores["properties"],
             "score": CHSH_Scores["score"],
             "experiment_result": run_result,
