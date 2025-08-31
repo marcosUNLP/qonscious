@@ -40,13 +40,13 @@ We suggest you start with **chsh_test_demo.ipynb**
 
 ## VisualStudio Code
 
-There is a _vscode_example_settings.json file chat you can rename to .vscode/settings.json . It provides most of the default settings that help VSC find tests, work with notebooks, etc. 
+There is a _vscode_example_settings.json file that you can rename to .vscode/settings.json . It provides most default settings that help VSC find tests, work with notebooks, etc. 
 
 ## ruff
 
 pyproject.toml includes default configurations for ruff (linting, etc.). Ruff is part of the [dev] dependencies.
 
-To use ruff from the command (and let ruff format, and tiddy up code) line do as follows:
+To use ruff from the command line (and let ruff format, and tidy up code),  do as follows:
 
 ```python
 ruff check . --fix
@@ -55,7 +55,7 @@ ruff format .
 
 ## pyright
 
-This projects uses pyright as a typechecker (In VSCode it will work via PyLance).
+This project uses pyright as a typechecker (In VSCode it will work via PyLance).
 
 Settings are defined in pyrightconfig.json
 
