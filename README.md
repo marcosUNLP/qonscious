@@ -20,12 +20,15 @@ In the NISQ era, quantum hardware is noisy, resource-limited, and variable over 
 
 We recommend working on a Python virtual environment.  This snippet of code provides examples of most of the things you'll need to do. 
 
-This project is organized with a pyproject.-toml file so no need for a requirements.txt file anymore.
+This project is organized with a pyproject.toml file, so there is no need for a requirements.txt file anymore.
+
+Python version is set in .python-version
 
 ```bash
-python3 -m venv .venv # create the venv
-source .venv/bin/activate # activate it
-pip install -e ".[dev,notebooks,viz]" # to install all dependencies 
+python -m venv .venv 
+source .venv/bin/activate
+pip install -U pip wheel
+pip install -e ".[dev,notebooks,viz]" # you can leave notebooks and viz out of you are only working on the framework.
 ```
 
 ## Example
