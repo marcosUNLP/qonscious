@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import math
 from datetime import datetime, timezone
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
+import psutil
 from qiskit_aer.primitives import Sampler
 
 from .backend_adapter import BackendAdapter
@@ -14,8 +16,14 @@ if TYPE_CHECKING:
 
 
 class AerSamplerAdapter(BackendAdapter):
-    def __init__(self, sampler: Optional[Sampler] = None):
+    def __init__(self, sampler: Sampler | None = None):
         self.sampler = sampler or Sampler()
+
+    @property
+    def max_qubits(self) -> int:
+        "Estimates the maximum number of qubits this computer can simulate"
+        "considering the available memory and some rules of thumb"
+        return int(math.log2(psutil.virtual_memory().available / 16))
 
     def run(self, circuit: QuantumCircuit, **kwargs) -> ExperimentResult:
         shots = kwargs.get("shots", 1024)
@@ -43,3 +51,9 @@ class AerSamplerAdapter(BackendAdapter):
             },
             "raw_results": job.result(),
         }
+
+    @property
+    def t1s(self) -> dict[int, float]:
+        "In an aer simulator, there is no limit on the t1."
+        "It could be different if we include a noise model"
+        return {qubit: float("inf") for qubit in range(self.max_qubits)}
