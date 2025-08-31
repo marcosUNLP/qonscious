@@ -44,3 +44,10 @@ def test_aer_sampler_basic_run():
     assert isinstance(timestamps, dict)
     assert all(k in timestamps for k in ("created", "running", "finished"))
     assert all(isinstance(timestamps[k], str) for k in timestamps)
+
+
+def test_t1s():
+    adapter = AerSamplerAdapter()
+    t1s = adapter.t1s
+    assert all(k in t1s for k in range(1, adapter.max_qubits))
+    assert all(t1s[k] == float("inf") for k in range(1, adapter.max_qubits))
