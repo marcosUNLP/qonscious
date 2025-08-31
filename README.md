@@ -11,15 +11,15 @@ In the NISQ era, quantum hardware is noisy, resource-limited, and variable over 
 ## Key Features
 
 - Figures of Merit evaluation (e.g., get CHSH score)
-- Conditional execution on compliance of figure of merit checks
+- Conditional execution on compliance with figures of merit checks
 - Inversion of control: pass a callback, not a circuit
 - Built-in logging, extensibility, and fallback logic
 
 ## Setting up dependencies
 
-We recommend working on a Python virtual environment.  This snippet of code provides examples of most of the things you'll need to do. 
+We recommend working in a Python virtual environment. This snippet of code provides examples of most of the tasks you'll need to complete. 
 
-This project is organized with a pyproject.toml file, so there is no need for a requirements.txt file anymore.
+This project is organized with a pyproject.toml file, so there is no longer a need for a requirements.txt file.
 
 Python version is set in .python-version
 
@@ -32,11 +32,15 @@ pip install -e ".[dev,notebooks,viz]" # you can leave notebooks and viz out of y
 
 ## Examples
 
-The notebooks folder contains several examples showing how to use Qonscious in different use cases. 
+The notebooks folder contains several examples of using Qonscious in different use cases. 
 
 We suggest you start with **chsh_test_demo.ipynb**
 
 # Development notes
+
+## VisualStudio Code
+
+There is a _vscode_example_settings.json file chat you can rename to .vscode/settings.json . It provides most of the default settings help VSC find tests, work with notebooks, etc. 
 
 ## ruff
 
