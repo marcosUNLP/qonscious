@@ -12,13 +12,13 @@ if TYPE_CHECKING:
 def test_packed_chsh_constraint_passes():
     # Create backend and constraint
     backend = AerSamplerAdapter()
-    policy = PackedCHSHTest()
+    fom = PackedCHSHTest()
 
     # Run introspection
-    result: ScorableFigureOfMeritResult = policy.evaluate(backend, shots=2048)
+    result: ScorableFigureOfMeritResult = fom.evaluate(backend, shots=2048)
 
     # Checks that the FoM name is correctly set
-    assert result["figure_of_merit"] == policy.__class__.__name__
+    assert result["figure_of_merit"] == fom.__class__.__name__
 
     # Check expected keys
     props = result.get("properties")
