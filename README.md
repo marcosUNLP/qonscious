@@ -15,6 +15,14 @@ In the NISQ era, quantum hardware is noisy, resource-limited, and variable over 
 - Inversion of control: pass a callback, not a circuit
 - Built-in logging, extensibility, and fallback logic
 
+## Use cases
+
+These are some scenarios where you may use Qonscious:
+1. Run a circuit conditional on your target computer (or simulator) checking some figures of merit (e.g., number of qubits, CHSH score, etc.)
+2. Benchmark a computer (or simulator) in terms of a collection of figures of merit.
+3. Explore correlations between experiment results and figures of merit of a gicen computer (or simulator)
+4. ...
+
 ## Setting up dependencies
 
 We recommend working in a Python virtual environment. This snippet of code provides examples of most of the tasks you'll need to complete. 
