@@ -1,8 +1,15 @@
-from qiskit import QuantumCircuit
-from qiskit_ibm_runtime import QiskitRuntimeService, Sampler
-from qonscious.core.ibm_sampler_adapter import IBMSamplerAdapter
-from dotenv import load_dotenv
+from __future__ import annotations
+
 import os
+from typing import TYPE_CHECKING
+
+from dotenv import load_dotenv
+from qiskit import QuantumCircuit
+
+from qonscious.adapters.ibm_sampler_adapter import IBMSamplerAdapter
+
+if TYPE_CHECKING:
+    from qonscious.core.types import ExperimentResult
 
 
 def test_ibm_sampler_adapter_basic_run():
@@ -16,15 +23,19 @@ def test_ibm_sampler_adapter_basic_run():
 
     load_dotenv()
     ibm_token = os.getenv("IBM_QUANTUM_TOKEN")
-    service = QiskitRuntimeService(channel="ibm_quantum", token=ibm_token)
-    backend = service.least_busy(operational=True, simulator=False)
-    adapter = IBMSamplerAdapter(backend)
+    adapter = IBMSamplerAdapter.least_busy_backend(ibm_token)
 
     # Run
-    result = adapter.run(qc, shots=512)
+    result: ExperimentResult = adapter.run(qc, shots=512)
 
-    # Validate structure
-    assert set(result.keys()) >= {"counts", "backend", "shots", "timestamps", "raw"}
+    # Validate structure // should not be necessary now that I use typing
+    assert set(result.keys()) >= {
+        "counts",
+        "backend_properties",
+        "shots",
+        "timestamps",
+        "raw_results",
+    }
 
     counts = result["counts"]
     assert isinstance(counts, dict)
@@ -32,7 +43,7 @@ def test_ibm_sampler_adapter_basic_run():
     assert all(isinstance(v, int) for v in counts.values())
     assert sum(counts.values()) == 512
 
-    assert isinstance(result["backend"], str)
+    assert isinstance(result["backend_properties"]["name"], str)
     assert result["shots"] == 512
 
     timestamps = result["timestamps"]

@@ -8,3 +8,4 @@ notebooks_private
 .vscode/*
 .idea/
 .pytest_cache/
+qonscious.egg-info/
