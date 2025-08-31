@@ -17,6 +17,9 @@ def test_packed_chsh_constraint_passes():
     # Run introspection
     result: ScorableFigureOfMeritResult = policy.evaluate(backend, shots=2048)
 
+    # Checks that the FoM name is correctly set
+    assert result["figure_of_merit"] == policy.__class__.__name__
+
     # Check expected keys
     props = result.get("properties")
     assert props is not None and isinstance(props, dict)  # narrows type for Pyright
