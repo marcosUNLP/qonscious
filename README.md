@@ -40,7 +40,7 @@ We suggest you start with **chsh_test_demo.ipynb**
 
 ## VisualStudio Code
 
-There is a _vscode_example_settings.json file chat you can rename to .vscode/settings.json . It provides most of the default settings help VSC find tests, work with notebooks, etc. 
+There is a _vscode_example_settings.json file chat you can rename to .vscode/settings.json . It provides most of the default settings that help VSC find tests, work with notebooks, etc. 
 
 ## ruff
 
