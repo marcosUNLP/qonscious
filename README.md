@@ -16,9 +16,9 @@ In the NISQ era, quantum hardware is noisy, resource-limited, and variable over 
 - Composable constraints (AND, OR, NOT)
 - Built-in logging, extensibility, and fallback logic
 
-## Seting up dependenies
+## Setting up dependencies
 
-We recommend working on a python virtual environment. 
+We recommend working on a Python virtual environment.  This snippet of code provides examples of most of the things you'll need to do. 
 
 This project is organized with a pyproject.-toml file so no need for a requirements.txt file anymore.
 
