@@ -30,6 +30,8 @@ pip install -U pip wheel
 pip install -e ".[dev,notebooks,viz]" # you can leave notebooks and viz out of you are only working on the framework.
 ```
 
+The **-e flag** in pip install tells pip to install Qonscious as a dependency so you can import from any Jupyter notebook working on the same venv while lettig you edit the framework.
+
 ## Examples
 
 The notebooks folder contains several examples showing how to use Qonscious in different use cases. 
@@ -54,4 +56,8 @@ ruff format .
 This projects uses pyright as a typechecker (In VSCode it will work via PyLance).
 
 Settings are defined in pyrightconfig.json
+
+## secret tokens and such
+
+
 
