@@ -20,12 +20,12 @@ In the NISQ era, quantum hardware is noisy, resource-limited, and variable over 
 
 We recommend working on a Python virtual environment.  This snippet of code provides examples of most of the things you'll need to do. 
 
+This project is organized with a pyproject.-toml file so no need for a requirements.txt file anymore.
+
 ```bash
 python3 -m venv .venv # create the venv
 source .venv/bin/activate # activate it
-pip install ... # to manually install a dependency
-pip freeze > requirements.txt # to update or create the requirements.txt file
-pip install -r requirements.txt # to install all dependencies from requirements.txt
+pip install -e ".[dev,notebooks,viz]" # to install all dependencies 
 ```
 
 ## Example
@@ -76,3 +76,23 @@ result = run_conditionally(
 )
 
 ```
+
+# Development notes
+
+## ruff
+
+pyproject.toml includes default configurations for ruff (linting, etc.). Ruff is part of the [dev] dependencies.
+
+To use ruff from the command (and let ruff format, and tiddy up code) line do as follows:
+
+```python
+ruff check . --fix
+ruff format .
+```
+
+## pyright
+
+This projects uses pyright as a typechecker (In VSCode it will work via PyLance).
+
+Settings are defined in pyrightconfig.json
+

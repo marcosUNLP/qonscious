@@ -1,25 +1,26 @@
-from qonscious.constraints.packed_chsh import PackedCHSHTest
-from qonscious.policies import MinimumAcceptableValue
-from qonscious.core.aer_sampler_adapter import AerSamplerAdapter
-from qonscious.core.types import BackendRunResult
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+from qonscious.adapters.aer_sampler_adapter import AerSamplerAdapter
+from qonscious.foms.packed_chsh import PackedCHSHTest
+
+if TYPE_CHECKING:
+    from qonscious.core.types import ScorableFigureOfMeritResult
 
 
 def test_packed_chsh_constraint_passes():
     # Create backend and constraint
     backend = AerSamplerAdapter()
-    policy = MinimumAcceptableValue(1.5)  # loose threshold to ensure pass
-    constraint = PackedCHSHTest(policy)
+    policy = PackedCHSHTest()
 
     # Run introspection
-    result = constraint.introspect(backend, shots=2048)
+    result: ScorableFigureOfMeritResult = policy.evaluate(backend, shots=2048)
 
     # Check expected keys
-    assert "CHSH_score" in result
-    assert all(k in result for k in ("E00", "E01", "E10", "E11"))
+    props = result.get("properties")
+    assert props is not None and isinstance(props, dict)  # narrows type for Pyright
+    assert all(k in props for k in ("E00", "E01", "E10", "E11"))
 
     # Evaluate the result
-    passed = constraint.evaluate(result)
-
-    # In ideal case, CHSH score should be > 2
-    assert passed is True
-    assert result["CHSH_score"] > 1.5
+    assert result["score"] > 2

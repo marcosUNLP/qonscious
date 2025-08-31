@@ -1,25 +1,51 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+from qonscious.adapters.aer_sampler_adapter import AerSamplerAdapter
 from qonscious.core.executor import run_conditionally
-from qonscious.core.aer_sampler_adapter import AerSamplerAdapter
-from qonscious.constraints import AlwaysPassConstraint
+from qonscious.core.merit_compliance_check import MeritComplianceCheck
 
-def test_run_conditionally_pass_branch():
+if TYPE_CHECKING:
+    from qonscious.adapters.backend_adapter import BackendAdapter
+    from qonscious.core.types import (
+        ExperimentResult,
+        FigureOfMeritResult,
+        QonsciousResult,
+    )
+
+
+def test_run_conditionally():
     backend = AerSamplerAdapter()
-    constraint = AlwaysPassConstraint()
+    passing_checks = [MeritComplianceCheck()]
+    failing_checks = [MeritComplianceCheck(figure_of_merit=None, decision_function=lambda _: False)]
 
-    # Track whether callbacks are called and with what
-    called = {"pass": False, "fail": False}
+    def on_pass(
+        adapter: BackendAdapter, figures_of_merit_results: list[FigureOfMeritResult]
+    ) -> ExperimentResult:
+        return {
+            "counts": {},
+            "shots": 1,
+            "backend_properties": {},
+            "timestamps": {},
+            "raw_results": {},
+        }
 
-    def on_pass(b, result):
-        called["pass"] = True
-        assert isinstance(result, dict)
-        return "PASS_RESULT"
+    def on_fail(
+        adapter: BackendAdapter, figures_of_merit_results: list[FigureOfMeritResult]
+    ) -> ExperimentResult:
+        return {
+            "counts": {},
+            "shots": 0,
+            "backend_properties": {},
+            "timestamps": {},
+            "raw_results": {},
+        }
 
-    def on_fail(b, result):
-        called["fail"] = True
-        return "FAIL_RESULT"
+    result: QonsciousResult = run_conditionally(backend, passing_checks, on_pass, on_fail)
+    assert result["condition"] == "pass"
+    assert result["experiment_result"]["shots"] == 1
 
-    result = run_conditionally(backend, constraint, on_pass, on_fail)
-
-    assert result == "PASS_RESULT"
-    assert called["pass"] is True
-    assert called["fail"] is False
+    result: QonsciousResult = run_conditionally(backend, failing_checks, on_pass, on_fail)
+    assert result["condition"] == "fail"
+    assert result["experiment_result"]["shots"] == 0
