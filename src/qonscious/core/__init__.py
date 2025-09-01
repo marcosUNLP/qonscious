@@ -4,7 +4,6 @@ from .types import (
     ExperimentResult,
     FigureOfMeritResult,
     QonsciousResult,
-    ScorableFigureOfMeritResult,
 )
 
 __all__ = [
@@ -13,5 +12,4 @@ __all__ = [
     "ExperimentResult",
     "FigureOfMeritResult",
     "QonsciousResult",
-    "ScorableFigureOfMeritResult",
 ]

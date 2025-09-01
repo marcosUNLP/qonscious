@@ -42,19 +42,8 @@ class FigureOfMeritResult(TypedDict):
     """
 
     figure_of_merit: str
-    properties: dict[str, Any] | None
+    properties: dict[str, Any]
     experiment_result: ExperimentResult | None
-
-
-class ScorableFigureOfMeritResult(FigureOfMeritResult):
-    """
-    Extension of FigureOfMeritResult for figures of merit that can be scored.
-
-    Attributes:
-        score: Numerical score assigned to the figure of merit result.
-    """
-
-    score: float
 
 
 class QonsciousResult(TypedDict):
@@ -69,4 +58,4 @@ class QonsciousResult(TypedDict):
 
     condition: str
     experiment_result: ExperimentResult | None
-    figures_of_merit_results: list[FigureOfMeritResult] | None
+    figures_of_merit_results: list[FigureOfMeritResult]
