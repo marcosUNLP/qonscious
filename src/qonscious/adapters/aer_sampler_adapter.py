@@ -5,7 +5,8 @@ from datetime import datetime, timezone
 from typing import TYPE_CHECKING
 
 import psutil
-from qiskit_aer.primitives import Sampler
+from qiskit.primitives.containers import BitArray
+from qiskit_aer.primitives import SamplerV2 as Sampler
 
 from .backend_adapter import BackendAdapter
 
@@ -40,22 +41,19 @@ class AerSamplerAdapter(BackendAdapter):
     def run(self, circuit: QuantumCircuit, **kwargs) -> ExperimentResult:
         shots = kwargs.get("shots", 1024)
         created = datetime.now(timezone.utc).isoformat()
-        job = self.sampler.run(circuits=[circuit], shots=shots)
+        job = self.sampler.run(pubs=[circuit], shots=shots)
         running = datetime.now(timezone.utc).isoformat()
-        quasi_dist = job.result().quasi_dists[0]
+        result = job.result()[0]
         finished = datetime.now(timezone.utc).isoformat()
-        # Convert to counts with bitstring keys (e.g., '00', '11')
-        counts = {
-            format(k, f"0{circuit.num_qubits}b"): int(round(prob * shots))
-            for k, prob in quasi_dist.items()
-        }
+
+        raw = result.join_data()
+        arr = raw.astype("uint8", copy=False) if not isinstance(raw, BitArray) else raw.array
+        counts = BitArray(arr, circuit.num_clbits).get_counts()
 
         return {
             "counts": counts,
             "shots": shots,
-            "backend_properties": {
-                "name": self.sampler.options.get("backend_name", "aer_simulator")
-            },
+            "backend_properties": {"name": "qiskit_aer.primitives.SamplerV2"},
             "timestamps": {
                 "created": created,
                 "running": running,

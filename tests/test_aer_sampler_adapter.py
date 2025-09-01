@@ -37,7 +37,7 @@ def test_aer_sampler_basic_run():
     assert sum(counts.values()) == 1024
 
     # Validate backend name
-    assert result["backend_properties"]["name"] == "aer_simulator"
+    assert result["backend_properties"]["name"] == "qiskit_aer.primitives.SamplerV2"
 
     # Validate timestamps
     timestamps = result["timestamps"]
