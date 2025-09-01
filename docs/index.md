@@ -10,5 +10,7 @@
 - Reference (API): see [API Reference](reference/index.md)
 - Explanations/Design: (coming soon)
 
+# Qonscious 
 
+--8<-- "README.md"
 
