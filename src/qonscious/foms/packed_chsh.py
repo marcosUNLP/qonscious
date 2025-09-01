@@ -10,18 +10,17 @@ from qonscious.foms.figure_of_merit import FigureOfMerit
 
 if TYPE_CHECKING:
     from qonscious.adapters.backend_adapter import BackendAdapter
-    from qonscious.core.types import ExperimentResult, ScorableFigureOfMeritResult
+    from qonscious.core.types import ExperimentResult, FigureOfMeritResult
 
 
 class PackedCHSHTest(FigureOfMerit):
-    def evaluate(self, backend_adapter: BackendAdapter, **kwargs) -> ScorableFigureOfMeritResult:
+    def evaluate(self, backend_adapter: BackendAdapter, **kwargs) -> FigureOfMeritResult:
         qc = self._build_circuit()
         run_result: ExperimentResult = backend_adapter.run(qc, shots=kwargs.get("shots", 1024))
         CHSH_Scores: dict = compute_parallel_CHSH_scores(run_result["counts"])
-        evaluation_result: ScorableFigureOfMeritResult = {
+        evaluation_result: FigureOfMeritResult = {
             "figure_of_merit": self.__class__.__name__,
-            "properties": CHSH_Scores["properties"],
-            "score": CHSH_Scores["score"],
+            "properties": CHSH_Scores,
             "experiment_result": run_result,
         }
         return evaluation_result
@@ -65,11 +64,9 @@ def compute_parallel_CHSH_scores(counts: dict) -> dict:
     S = E[0] + E[1] + E[2] - E[3]
 
     return {
-        "properties": {
-            "E00": E[0],
-            "E01": E[1],
-            "E10": E[2],
-            "E11": E[3],
-        },
+        "E00": E[0],
+        "E01": E[1],
+        "E10": E[2],
+        "E11": E[3],
         "score": S,
     }

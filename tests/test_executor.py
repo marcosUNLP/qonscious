@@ -44,8 +44,8 @@ def test_run_conditionally():
 
     result: QonsciousResult = run_conditionally(backend, passing_checks, on_pass, on_fail)
     assert result["condition"] == "pass"
-    assert result["experiment_result"]["shots"] == 1
+    assert result["experiment_result"] is not None and result["experiment_result"]["shots"] == 1
 
     result: QonsciousResult = run_conditionally(backend, failing_checks, on_pass, on_fail)
     assert result["condition"] == "fail"
-    assert result["experiment_result"]["shots"] == 0
+    assert result["experiment_result"] is not None and result["experiment_result"]["shots"] == 0
