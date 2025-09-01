@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from functools import cached_property
 from typing import TYPE_CHECKING
 
 from qiskit import transpile
@@ -24,18 +25,33 @@ class IBMSamplerAdapter(BackendAdapter):
         service = QiskitRuntimeService(channel="ibm_quantum_platform", token=token)
         return cls(service.least_busy(operational=True, simulator=False))
 
-    def extract_counts(self, result) -> dict:
-        data = result[0].data
-        field_names = [
-            k
-            for k in dir(data)
-            if not k.startswith("_") and hasattr(getattr(data, k), "get_counts")
-        ]
-        if len(field_names) != 1:
-            raise ValueError(
-                f"Expected exactly one data field with get_counts(), got: {field_names}"
-            )
-        return getattr(data, field_names[0]).get_counts()
+    @cached_property
+    def _backend_configuration(self):
+        "QPU configuration obtained as indicated in https://quantum.cloud.ibm.com/docs/en/guides/get-qpu-information"
+        "Cached after first call - maybe we should not cache it"
+        "cache can be cleared with ```del obj._backend_configuration```"
+        return self.backend.configuration()
+
+    @cached_property
+    def _backend_properties(self):
+        "QPU dynamic information obtained as indicated in https://quantum.cloud.ibm.com/docs/en/guides/get-qpu-information"
+        "Cached after first call - maybe we should not cache it"
+        "cache can be cleared with ```del obj._backend_properties```"
+        return self.backend.properties()
+
+    @property
+    def n_qubits(self) -> int:
+        return self._backend_configuration.n_qubits
+
+    @property
+    def t1s(self) -> dict[int, float]:
+        n_qubits = self._backend_configuration.n_qubits
+        return {i: self._backend_properties.t1(i) for i in range(n_qubits)}
+
+    @property
+    def t2s(self) -> dict[int, float]:
+        n_qubits = self._backend_configuration.n_qubits
+        return {i: self._backend_properties.t2(i) for i in range(n_qubits)}
 
     def run(self, circuit: QuantumCircuit, **kwargs) -> ExperimentResult:
         kwargs.setdefault("shots", 1024)
@@ -44,7 +60,7 @@ class IBMSamplerAdapter(BackendAdapter):
         job = sampler.run([transpiled_circuit], **kwargs)
         result = job.result()
         timestamps = job.metrics().get("timestamps", {})
-        counts = self.extract_counts(result)
+        counts = _extract_counts(result)
         return {
             "counts": counts,
             "shots": kwargs["shots"],
@@ -52,3 +68,13 @@ class IBMSamplerAdapter(BackendAdapter):
             "timestamps": timestamps,
             "raw_results": result,
         }
+
+
+def _extract_counts(result) -> dict:
+    data = result[0].data
+    field_names = [
+        k for k in dir(data) if not k.startswith("_") and hasattr(getattr(data, k), "get_counts")
+    ]
+    if len(field_names) != 1:
+        raise ValueError(f"Expected exactly one data field with get_counts(), got: {field_names}")
+    return getattr(data, field_names[0]).get_counts()
