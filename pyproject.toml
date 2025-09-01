@@ -28,6 +28,7 @@ dev = [
   "pytest>=8.4",
   "ruff>=0.5",
   "pyright",
+  "mkdocs"
 ]
 notebooks = [
   "ipykernel>=6.29",
