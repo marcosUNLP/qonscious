@@ -1,12 +1,10 @@
-Meet **Qonscious**, a framework for resource-aware quantum computing in the NISQ era.
-
-# Qonscious
-
 **Qonscious** is a runtime framework designed to support conditional execution of quantum circuits based on resource introspection. It helps you build quantum applications that are aware of backend conditions — such as entanglement, coherence, or fidelity — before execution.
 
 ## Why Qonscious?
 
 In the NISQ era, quantum hardware is noisy, resource-limited, and variable over time. Static resource assumptions lead to unreliable results. **Qonscious** makes quantum programs introspective and adaptive.
+
+For a deeper discusion on the motivation behind Qonscious, read [our article](https://arxiv.org/html/2508.19276v1)
 
 ## Key Features
 
@@ -18,18 +16,19 @@ In the NISQ era, quantum hardware is noisy, resource-limited, and variable over 
 ## Use cases
 
 These are some scenarios where you may use Qonscious:
-1. Run a circuit conditional on your target computer (or simulator) checking some figures of merit (e.g., number of qubits, CHSH score, etc.)
-2. Benchmark a computer (or simulator) in terms of a collection of figures of merit.
-3. Explore correlations between experiment results and figures of merit of a gicen computer (or simulator)
-4. ...
+
+- Run a circuit conditional on your target computer (or simulator) checking some figures of merit (e.g., number of qubits, CHSH score, etc.)
+- Benchmark a computer (or simulator) in terms of a collection of figures of merit.
+- Explore correlations between experiment results and figures of merit of a gicen computer (or simulator)
+- ...
 
 ## Setting up dependencies
-
-We recommend working in a Python virtual environment. This snippet of code provides examples of most of the tasks you'll need to complete. 
 
 This project is organized with a pyproject.toml file, so there is no longer a need for a requirements.txt file.
 
 Python version is set in .python-version
+
+We recommend working in a Python virtual environment. The following snippet of code provides examples of most of the tasks you'll need to complete. 
 
 ```bash
 python -m venv .venv 
@@ -39,6 +38,10 @@ pip install -e ".[dev,notebooks,viz,docs]" # you can leave notebooks and viz out
 ```
 
 The **-e flag** in pip install tells pip to install Qonscious as a dependency so you can import from any Jupyter notebook working on the same venv while lettig you edit the framework.
+
+## Documentation
+
+Up to date documentation is available on [github pages](https://lifia-unlp.github.io/qonscious/)
 
 ## Examples
 
@@ -68,8 +71,5 @@ ruff format .
 This project uses pyright as a typechecker (In VSCode it will work via PyLance).
 
 Settings are defined in pyrightconfig.json
-
-## secret tokens and such
-
 
 
