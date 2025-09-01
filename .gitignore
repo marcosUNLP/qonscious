@@ -9,3 +9,5 @@ notebooks_private
 .idea/
 .pytest_cache/
 qonscious.egg-info/
+# MkDocs
+site/

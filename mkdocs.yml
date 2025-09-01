@@ -1,0 +1,39 @@
+site_name: Qonscious
+repo_url: hhttps://github.com/lifia-unlp/qonscious
+theme:
+  name: material
+
+nav:
+  - Overview: index.md
+  - Tutorials:
+      - run_conditionally: tutorials/understanding-run-conditionally.md
+      - notebooks: tutorials/qonscious-notebooks.md
+  - How-to:
+      -  Contribute: how-to/contributing.md
+  - Reference:
+      - API: reference/index.md
+  - Changelog: changelog.md
+
+markdown_extensions:
+  - pymdownx.snippets:
+      check_paths: true
+      
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]   
+          options:
+            docstring_style: google
+            show_signature: true
+            show_source: true
+            show_root_heading: false
+            show_root_toc_entry: false        
+            heading_level: 3    
+
+watch:
+  - src                   
+  - docs
+
+strict: true             
