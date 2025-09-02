@@ -13,6 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
 
+    env:
+          IBM_QUANTUM_TOKEN: ${{ secrets.IBM_QUANTUM_TOKEN }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -34,9 +37,7 @@ jobs:
           pytest -m "not ibm_token_required" --junitxml=reports/junit-local.xml --cov=qonscious --cov-report=xml --maxfail=1 -q
 
       - name: Run IBM-cloud tests (if token is present)
-        if: ${{ secrets.IBM_QUANTUM_TOKEN != '' }}
-        env:
-          IBM_QUANTUM_TOKEN: ${{ secrets.IBM_QUANTUM_TOKEN }}
+        if: env.QISKIT_IBM_TOKEN != ''
         run: |
           pytest -m "ibm_token_required" --junitxml=reports/junit-ibm.xml --maxfail=1 -q
 
