@@ -14,7 +14,19 @@ if TYPE_CHECKING:
 
 
 class PackedCHSHTest(FigureOfMerit):
+    """
+    I represent a CHSH test, run on 8 qubits (the four Bell pairs), in parallel.
+    """
+
     def evaluate(self, backend_adapter: BackendAdapter, **kwargs) -> FigureOfMeritResult:
+        """
+        Returns:
+            a FigureOfMeritResult with the following properties:
+                figure_of_merit: "PackedCHSHTest" (a str).
+                properties: a dict with keys "E00", "E01", "E10", "E11", representing the individual
+                counts of each observed pait, and "score", computed as E00 + E01 + E10 - E11.
+                experiment_result: an instance of ExperimentResult, with the result of the experiment.
+        """
         qc = self._build_circuit()
         run_result: ExperimentResult = backend_adapter.run(qc, shots=kwargs.get("shots", 1024))
         CHSH_Scores: dict = compute_parallel_CHSH_scores(run_result["counts"])
