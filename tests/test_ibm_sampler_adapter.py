@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 from typing import TYPE_CHECKING
 
+import pytest
 from dotenv import load_dotenv
 from qiskit import QuantumCircuit
 
@@ -12,18 +13,20 @@ if TYPE_CHECKING:
     from qonscious.core.types import ExperimentResult
 
 
+@pytest.mark.ibm_token_required
 def test_ibm_sampler_adapter_basic_run():
+    # Setup IBM Runtime service and adapter
+    load_dotenv()
+    ibm_token = os.getenv("IBM_QUANTUM_TOKEN")
+    if not ibm_token:
+        pytest.skip("IBM token not set")
+    adapter = IBMSamplerAdapter.least_busy_backend(ibm_token)
+
     # Create test circuit
     qc = QuantumCircuit(2)
     qc.h(0)
     qc.cx(0, 1)
     qc.measure_all()
-
-    # Setup IBM Runtime service and adapter
-
-    load_dotenv()
-    ibm_token = os.getenv("IBM_QUANTUM_TOKEN")
-    adapter = IBMSamplerAdapter.least_busy_backend(ibm_token)
 
     # Run
     result: ExperimentResult = adapter.run(qc, shots=512)

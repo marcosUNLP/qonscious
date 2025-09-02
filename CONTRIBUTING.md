@@ -55,7 +55,15 @@ ruff format .
 
 ## Testing
 
-Make sure that any extensions/improvement/changes you propopse to Qonscious are covered by unit tests.
+Make sure that any extensions/improvement/changes you contribute are covered by unit tests.
+
+Mark test methods that interact with IBM's backend (thus requiring a token) with the annotation `@pytest.mark.ibm_token_required`
+
+Use:
+* `pytest` : to run all tests
+* `pytest -m "not ibm_token_required"` : to only run tests that to not interact with IBM's backend
+* `pytest -m "ibm_token_required"` : to only run tests that that do interact with IBM's backend
+
 
 ## VisualStudio Code
 
