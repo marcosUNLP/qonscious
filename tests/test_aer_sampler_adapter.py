@@ -7,7 +7,7 @@ from qiskit import QuantumCircuit
 from qonscious.adapters.aer_sampler_adapter import AerSamplerAdapter
 
 if TYPE_CHECKING:
-    from qonscious.core.types import ExperimentResult
+    from qonscious.results.result_types import ExperimentResult
 
 
 def test_aer_sampler_basic_run():

@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, Protocol
 if TYPE_CHECKING:
     from qiskit import QuantumCircuit
 
-    from qonscious.core.types import ExperimentResult
+    from qonscious.results.result_types import ExperimentResult
 
 
 class BackendAdapter(Protocol):

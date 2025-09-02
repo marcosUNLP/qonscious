@@ -30,17 +30,20 @@ class ExperimentResult(TypedDict):
 class FigureOfMeritResult(TypedDict):
     """
     Unified structure returned by any FigureOfMerit evaluation.
-    For now, speficis types of figures of merit will store their results in the properties dictionary.
+    For now, speficis types of figures of merit will store their results in the
+    properties dictionary.
     Refer to the documentation of each figure of merit for details.
     They can eventually subclass this class to better support type-checking and documentation.
 
     Attributes:
+        timestamp: ISO timestamp
         figure_of_merit: a string identifiying the FOM this results relates to
                         (could be the FoM class name)
         properties: dictionary with various properties describing the result.
         experiment_result: The ExperimentResult used to compute the figure of merit (if any).
     """
 
+    timestamp: str
     figure_of_merit: str
     properties: dict[str, Any]
     experiment_result: ExperimentResult | None
@@ -51,7 +54,8 @@ class QonsciousResult(TypedDict):
     Unified structure returned by the QonsciousRunner run method.
 
     Attributes:
-        contition: String describing the condition under which the run executed (for now only fail/pass).
+        condition: String describing the condition under which the run executed
+        (for now only fail/pass).
         experiment_result: ExperimentResult that was obtained in this run.
         figures_of_merit_results: FigureOfMeritResults that were considered in this run.
     """

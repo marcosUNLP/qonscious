@@ -6,8 +6,8 @@ if TYPE_CHECKING:
     from typing import Callable
 
     from qonscious.adapters.backend_adapter import BackendAdapter
-    from qonscious.core.types import FigureOfMeritResult
     from qonscious.foms.figure_of_merit import FigureOfMerit
+    from qonscious.results.result_types import FigureOfMeritResult
 
 
 class MeritComplianceCheck:

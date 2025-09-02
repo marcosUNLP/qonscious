@@ -2,13 +2,14 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from qonscious.actions.qonscious_callable import QonsciousCallable
 from qonscious.adapters.aer_sampler_adapter import AerSamplerAdapter
-from qonscious.core.executor import run_conditionally
-from qonscious.core.merit_compliance_check import MeritComplianceCheck
+from qonscious.checks.merit_compliance_check import MeritComplianceCheck
+from qonscious.run_conditionally import run_conditionally
 
 if TYPE_CHECKING:
     from qonscious.adapters.backend_adapter import BackendAdapter
-    from qonscious.core.types import (
+    from qonscious.results.result_types import (
         ExperimentResult,
         FigureOfMeritResult,
         QonsciousResult,
@@ -42,10 +43,14 @@ def test_run_conditionally():
             "raw_results": {},
         }
 
-    result: QonsciousResult = run_conditionally(backend, passing_checks, on_pass, on_fail)
+    result: QonsciousResult = run_conditionally(
+        backend, passing_checks, QonsciousCallable(on_pass), QonsciousCallable(on_fail)
+    )
     assert result["condition"] == "pass"
     assert result["experiment_result"] is not None and result["experiment_result"]["shots"] == 1
 
-    result: QonsciousResult = run_conditionally(backend, failing_checks, on_pass, on_fail)
+    result: QonsciousResult = run_conditionally(
+        backend, failing_checks, QonsciousCallable(on_pass), QonsciousCallable(on_fail)
+    )
     assert result["condition"] == "fail"
     assert result["experiment_result"] is not None and result["experiment_result"]["shots"] == 0
