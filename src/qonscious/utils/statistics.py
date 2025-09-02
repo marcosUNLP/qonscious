@@ -19,6 +19,30 @@ def describe(
     nonfinite: str = "ignore",  # "ignore", "cap", "error"
     cap_value: float | None = None,
 ) -> dict[str, float | str]:
+    """
+    Compute simple descriptive statistics for a list of numbers.
+
+    Parameters
+    ----------
+    values : Sequence[float]
+        Input values to analyze.
+    nonfinite : {"ignore", "cap", "error"}, default="ignore"
+        Policy for handling non-finite values (NaN, ±inf):
+          - "ignore": drop them before computing statistics.
+          - "cap": replace them with `cap_value` (must be provided).
+          - "error": raise an exception if any non-finite is found.
+    cap_value : float, optional
+        Replacement value when `nonfinite="cap"`.
+
+    Returns
+    -------
+    dict[str, float | str]
+        A dictionary containing:
+          - "mean", "median", "std", "min", "max", "q25", "q75", "cv"
+            (coefficient of variation = std / mean),
+          - "comments": notes about how non-finite values were handled
+            or why results are NaN (e.g., empty input).
+    """
     comments = None
     xs = list(values)
 
