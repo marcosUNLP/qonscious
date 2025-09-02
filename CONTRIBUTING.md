@@ -80,7 +80,7 @@ We use mkdocs + mkdocstrings to generate documentation.
   - `docs/index.md`, `docs/reference/index.md` (with `::: qonscious`)
 
 ## Write good docstrings + type hints
-- Use Google or NumPy style consistently.
+- Use [Google style](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html) consistently.
 - Public APIs should document: summary, Args, Returns, Raises, Examples.
 
 ## Preview locally while writing

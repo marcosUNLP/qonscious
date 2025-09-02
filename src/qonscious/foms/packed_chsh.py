@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from datetime import datetime, timezone
 from typing import TYPE_CHECKING
 
 import numpy as np
@@ -10,7 +11,7 @@ from qonscious.foms.figure_of_merit import FigureOfMerit
 
 if TYPE_CHECKING:
     from qonscious.adapters.backend_adapter import BackendAdapter
-    from qonscious.core.types import ExperimentResult, FigureOfMeritResult
+    from qonscious.results.result_types import ExperimentResult, FigureOfMeritResult
 
 
 class PackedCHSHTest(FigureOfMerit):
@@ -25,12 +26,13 @@ class PackedCHSHTest(FigureOfMerit):
                 figure_of_merit: "PackedCHSHTest" (a str).
                 properties: a dict with keys "E00", "E01", "E10", "E11", representing the individual
                 counts of each observed pait, and "score", computed as E00 + E01 + E10 - E11.
-                experiment_result: an instance of ExperimentResult, with the result of the experiment.
+                experiment_result: an instance of ExperimentResult; the result of the experiment.
         """
         qc = self._build_circuit()
         run_result: ExperimentResult = backend_adapter.run(qc, shots=kwargs.get("shots", 1024))
         CHSH_Scores: dict = compute_parallel_CHSH_scores(run_result["counts"])
         evaluation_result: FigureOfMeritResult = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "figure_of_merit": self.__class__.__name__,
             "properties": CHSH_Scores,
             "experiment_result": run_result,

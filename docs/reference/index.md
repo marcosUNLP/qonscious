@@ -1,7 +1,11 @@
 # API Reference
 
 ## Core
-::: qonscious.core
+
+::: qonscious.core.qonscious_runner
+    options:
+      members:
+        - run_conditionally
 
 ## Adapters
 ::: qonscious.adapters

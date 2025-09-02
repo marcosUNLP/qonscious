@@ -6,7 +6,7 @@ from qonscious.adapters.aer_sampler_adapter import AerSamplerAdapter
 from qonscious.foms.packed_chsh import PackedCHSHTest
 
 if TYPE_CHECKING:
-    from qonscious.core.types import FigureOfMeritResult
+    from qonscious.results.result_types import FigureOfMeritResult
 
 
 def test_packed_chsh_constraint_passes():

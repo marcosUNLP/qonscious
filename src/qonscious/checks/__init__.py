@@ -1,0 +1,1 @@
+from qonscious.checks.merit_compliance_check import MeritComplianceCheck

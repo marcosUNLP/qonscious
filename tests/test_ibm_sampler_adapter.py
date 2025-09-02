@@ -10,7 +10,7 @@ from qiskit import QuantumCircuit
 from qonscious.adapters.ibm_sampler_adapter import IBMSamplerAdapter
 
 if TYPE_CHECKING:
-    from qonscious.core.types import ExperimentResult
+    from qonscious.results.result_types import ExperimentResult
 
 
 @pytest.mark.ibm_token_required
