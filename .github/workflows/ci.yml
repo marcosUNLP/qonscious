@@ -37,7 +37,7 @@ jobs:
           pytest -m "not ibm_token_required" --junitxml=reports/junit-local.xml --cov=qonscious --cov-report=xml --maxfail=1 -q
 
       - name: Run IBM-cloud tests (if token is present)
-        if: env.QISKIT_IBM_TOKEN != ''
+        if: env.IBM_QUANTUM_TOKEN != ''
         run: |
           pytest -m "ibm_token_required" --junitxml=reports/junit-ibm.xml --maxfail=1 -q
 
@@ -47,11 +47,3 @@ jobs:
         with:
           name: junit-reports
           path: reports/*.xml
-
-      - name: Upload coverage to Codecov (optional)
-        if: always()
-        uses: codecov/codecov-action@v5
-        with:
-          files: coverage.xml
-          # token is only needed for private repos or some setups:
-          # token: ${{ secrets.CODECOV_TOKEN }}
