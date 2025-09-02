@@ -19,6 +19,7 @@ class AggregateQPUFigureOfMerit(FigureOfMerit):
     """
     I aggregate various properties common to all backends in a single FOM.
     I aggregate: n_qubits, T1 average, T2 average, ...
+    For multivalued figures such as T1, I provide a dict with  descriptive statistics
     """
 
     def evaluate(self, backend_adapter: BackendAdapter, **kwargs) -> FigureOfMeritResult:
