@@ -2,6 +2,8 @@ site_name: Qonscious
 repo_url: https://github.com/lifia-unlp/qonscious
 theme:
   name: material
+  toc: 
+    depth: 2
 
 nav:
   - Overview: index.md
@@ -17,6 +19,9 @@ nav:
 markdown_extensions:
   - pymdownx.snippets:
       check_paths: true
+  - toc:
+      permalink: false
+      toc_depth: 3 
       
 plugins:
   - search
@@ -30,7 +35,7 @@ plugins:
             show_source: true
             show_root_heading: false
             show_root_toc_entry: false        
-            heading_level: 3    
+            heading_level: 3  
 
 watch:
   - src                   

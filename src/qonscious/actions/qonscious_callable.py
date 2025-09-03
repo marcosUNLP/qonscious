@@ -10,8 +10,8 @@ class QonsciousCallable(QonsciousAction):
     A callable wraped as QonsciousAction
 
     Attributes:
-        _callable ( Callable[[BackendAdapter, list[FigureOfMeritResult]], ExperimentResult | None]):
-          the callable to execute
+        callable ( Callable[[BackendAdapter, list[FigureOfMeritResult]], ExperimentResult | None]):
+            the callable to execute
     """
 
     def __init__(
