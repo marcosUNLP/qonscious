@@ -1,7 +1,7 @@
 # Project overview
 
 - Tutorials: 
-    - [Undertanding run_conditionally](tutorials/understanding-run-conditionally.md)
+    - [Understanding run_conditionally](tutorials/understanding-run-conditionally.md)
     - [Qonscious notebooks](tutorials/qonscious-notebooks.md)    
 - How-to guides: 
     - [Contribute to this project](how-to/contributing.md)
