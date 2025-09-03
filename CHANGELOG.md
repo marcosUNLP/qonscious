@@ -4,22 +4,21 @@ Example content to imitate
 All notable changes to this project will be documented in this file.
 The format is based on Keep a Changelog and this project adheres to Semantic Versioning.
 
-## [Unreleased]
+## [0.0.1] - 2025-09-02
 
-## [1.4.0] - 2025-08-31
+First version that shows all of Qonscions in a clear and almost mature way.
+APIs and desing will still be changed. 
+
 ### Added
-- New CHSH scoring policy interface (#412).
+- Documentation that is deployed automatically to github pages
 
 ### Changed
-- `SamplerAdapter` now accepts an instantiated backend instead of a name (#405).
+- Package organization was improved with learnability in mind
 
 ### Fixed
-- Avoid crash when `backend.properties()` is unavailable (#418).
+- Few bugs.
 
-## [1.3.2] - 2025-07-12
-### Fixed
-- Correct T1 dictionary generation for Aer simulator (#399).
+### Comming
+- Document result types
+- Actions can be chained (thus, we would get a collection of QuonsciousResults)
 
-## [1.3.0] - 2025-06-01
-### Added
-- `MinimumAcceptableValue` threshold policy (#372).
