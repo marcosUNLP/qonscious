@@ -19,7 +19,8 @@ dependencies = [
   "qiskit>=2.0,<3",
   "qiskit-aer>=0.17",
   "qiskit-ibm-runtime>=0.40",
-  "python-dotenv>=1.0",      
+  "python-dotenv>=1.0",
+  "qiskit-ionq",      
 ]
 
 # load these with `pip install .[dev]` or `pip install .[notebooks]` or `pip install .[viz]` or `pip install .[docs]`

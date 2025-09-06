@@ -61,8 +61,9 @@ Mark test methods that interact with IBM's backend (thus requiring a token) with
 
 Use:
 * `pytest` : to run all tests
-* `pytest -m "not ibm_token_required"` : to only run tests that to not interact with IBM's backend
+* `pytest -m "not (ibm_token_required or ionq_apikey_required)"` : to only run tests that to not interact with IBM's or IONQ`sbackend
 * `pytest -m "ibm_token_required"` : to only run tests that that do interact with IBM's backend
+* `pytest -m "ionq_apikey_required"` : to only run tests that that do interact with IONQ'S backend
 
 
 ## VisualStudio Code
