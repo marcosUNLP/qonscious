@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from qonscious.actions.qonscious_action import QonsciousAction
@@ -14,7 +14,7 @@ def run_conditionally(
     checks: list[MeritComplianceCheck],
     on_pass: QonsciousAction,
     on_fail: QonsciousAction,
-    **kwargs,
+    **kwargs: Any,
 ) -> QonsciousResult:
     """
     Main entry point of the Qonscious framework.
