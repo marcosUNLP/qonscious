@@ -24,13 +24,13 @@ def run_conditionally(
     checks pass or any check fails.
 
     Args:
-        backend_adapter (BackendAdapter) : Adapter to the quantum backend on which figures of merit
+        backend_adapter: Adapter to the quantum backend on which figures of merit
             are evaluated and circuits may be executed.
-        checks (list[MeritComplianceCheck]) : The merit compliance checks to perform on the backend.
-        on_pass (QonsciousAction) :  Action to execute if all checks succeed. Must implement
+        checks: The merit compliance checks to perform on the backend.
+        on_pass:  Action to execute if all checks succeed. Must implement
             `run(backend_adapter, fom_results, **kwargs)` and return an `ExperimentResult` or `None`.
-        on_fail (QonsciousAction) : Action to execute if any check fails. Same contract as `on_pass`.
-        **kwargs : Additional keyword arguments forwarded to the checks and actions.
+        on_fail: Action to execute if any check fails. Same contract as `on_pass`.
+        **kwargs: Additional keyword arguments forwarded to the checks and actions.
 
     Returns:
         QonsciousResult: A result object containing the list of figure-of-merit results
