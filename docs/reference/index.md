@@ -30,6 +30,15 @@ ibm_token = os.getenv("IBM_QUANTUM_TOKEN") # edit as needed
 adapter = IBMSamplerAdapter.least_busy_backend(ibm_token)
 ```
 
+You can create an adapter that simulates one of IBM's real computers (using Aer's Simulator, and the real noise models)
+
+```Python
+import os
+from qonscious.adapters import AerSimulatorAdapter
+ibm_token = os.getenv("IBM_QUANTUM_TOKEN") # edit as needed
+adapter = AerSimulatorAdapter.based_on(ibm_token, backend_name="ibm_brisbane") # you can choose a different one
+```
+
 You can even create an adapter on IonQ's QPU. This example shows how to work with
 the simulator of Aria-1 (including its noise model).
 

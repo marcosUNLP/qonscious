@@ -23,7 +23,7 @@ def run_conditionally(
     and executes the appropriate action depending on whether all
     checks pass or any check fails.
 
-    Args:
+    Params:
         backend_adapter BackendAdapter : Adapter to the quantum backend on which figures of merit
             are evaluated and circuits may be executed.
         checks list[MeritComplianceCheck] : The merit compliance checks to perform on the backend.
