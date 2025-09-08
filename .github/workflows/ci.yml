@@ -36,17 +36,17 @@ jobs:
 
       - name: Run unit tests (skip IBM and IONQ)
         run: |
-          pytest -m "not (ibm_token_required or ionq_apikey_required)" -q
+          pytest -m "not (ibm_token_required or ionq_apikey_required)" --junitxml=reports/junit-local.xml --cov=qonscious --cov-report=xml --maxfail=1 -q
 
       - name: Run IBM-cloud tests (if token is present)
         if: env.IBM_QUANTUM_TOKEN != ''
         run: |
-          pytest -m "ibm_token_required" -q
+          pytest -m "ibm_token_required" --junitxml=reports/junit-ibm.xml --maxfail=1 -q
 
       - name: Run IONQ-cloud tests (if token is present)
         if: env.IONQ_API_KEY != ''
         run: |
-          pytest -m "ionq_apikey_required" -q
+          pytest -m "ionq_apikey_required" --junitxml=reports/junit-ibm.xml --maxfail=1 -q
 
       - name: Upload test reports
         if: always()
