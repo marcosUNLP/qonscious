@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "qonscious"
-version = "0.1.0"
+version = "0.1.1"
 description = "Qonscious is a runtime framework designed to support conditional execution of quantum circuits based on resource introspection. It helps you build quantum applications that are aware of backend conditions — such as entanglement, coherence, or fidelity — before execution."
 authors = [
     { name = "Alejandro Fernandez", email = "casco@lifia.info.unlp.edu.ar" },
