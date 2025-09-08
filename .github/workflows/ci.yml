@@ -34,7 +34,7 @@ jobs:
           pip install -e .[dev,test]
           pip install pytest pytest-cov
 
-      - name: Run unit tests (skip IBM)
+      - name: Run unit tests (skip IBM and IONQ)
         run: |
           pytest -m "not (ibm_token_required or ionq_apikey_required)" --junitxml=reports/junit-local.xml --cov=qonscious --cov-report=xml --maxfail=1 -q
 
