@@ -11,3 +11,8 @@ notebooks_private
 qonscious.egg-info/
 # MkDocs
 site/
+# Build
+/dist/
+/build/
+/*.egg-info
+/src/*.egg-info
