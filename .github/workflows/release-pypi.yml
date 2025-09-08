@@ -1,0 +1,68 @@
+name: Release Qonscious
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: read
+  id-token: write  # in case of migration to pypa/gh-action-pypi-publish
+  attestations: write  # for SLSA/provenance
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install build deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install build twine
+
+      - name: Lint & test (fast)
+        run: |
+          pip install -e .[dev]
+          ruff --version
+          ruff check .
+          pytest -q 
+
+      - name: Build sdist and wheel
+        run: python -m build
+
+      - name: Determine target repository
+        id: repo
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          if echo "$TAG" | grep -qE "-(a|b|rc)\.[0-9]+"; then
+            echo "repo=testpypi" >> $GITHUB_OUTPUT
+          else
+            echo "repo=pypi" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Publish to TestPyPI
+        if: steps.repo.outputs.repo == 'testpypi'
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.TEST_PYPI_API_TOKEN }}
+        run: |
+          python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+
+      - name: Publish to PyPI
+        if: steps.repo.outputs.repo == 'pypi'
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          python -m twine upload dist/*
