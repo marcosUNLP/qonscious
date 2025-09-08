@@ -1,7 +1,12 @@
 from __future__ import annotations
 
 from functools import cached_property
-from typing import TYPE_CHECKING, Self
+from typing import TYPE_CHECKING
+
+try:
+    from typing import Self
+except ImportError:
+    from typing_extensions import Self
 
 from qiskit import QuantumCircuit, transpile
 from qiskit_aer import AerSimulator
