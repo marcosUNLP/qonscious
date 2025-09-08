@@ -28,7 +28,8 @@ def run_conditionally(
             are evaluated and circuits may be executed.
         checks: The merit compliance checks to perform on the backend.
         on_pass:  Action to execute if all checks succeed. Must implement
-            `run(backend_adapter, fom_results, **kwargs)` and return an `ExperimentResult` or `None`.
+            `run(backend_adapter, fom_results, **kwargs)` and return an `ExperimentResult`
+             or `None`.
         on_fail: Action to execute if any check fails. Same contract as `on_pass`.
         **kwargs: Additional keyword arguments forwarded to the checks and actions.
 
