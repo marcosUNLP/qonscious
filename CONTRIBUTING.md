@@ -32,6 +32,25 @@ Qonscious is an experimentation platform. As such, it already foresees a few ext
 
 In the current phase of development, the design of Qonscious will change often. As we create new FoMs, provide new backend adapters, and explore usage scenarios, the API will change. There will be no PyPI version you can install with pip. For the time being, you install with `pip install -e`
 
+## Versioning (SemVer)
+- MAJOR.MINOR.PATCH (tag `vX.Y.Z`)
+- Pre-releases: `vX.Y.Z-rc.N`
+
+## Steps
+1. Update code and docs.
+2. Update CHANGELOG.md.
+3. Choose version bump:
+   - Feature: MINOR
+   - Bugfix: PATCH
+4. Tag for TestPyPI (optional): `git tag vX.Y.Z-rc.1 && git push origin vX.Y.Z-rc.1`
+5. Verify installation from TestPyPI.
+6. Tag final: `git tag vX.Y.Z && git push origin vX.Y.Z`
+7. Create GitHub Release and paste CHANGELOG entries.
+
+Git: use v prefix for clarity: e.g., v0.1.0.
+
+We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) (feat:, fix:, docs:, refactor:…) to evantually enable automated version bump.
+
 # 6.	Development notes
 
 ## Typing
