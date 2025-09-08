@@ -46,7 +46,7 @@ Documentation = "https://lifia-unlp.github.io/qonscious/"
 [project.optional-dependencies] 
 dev = [
   "pytest>=8.4",
-  "ruff>=0.5",
+  "ruff>=0.12.12",
   "pyright",
 ]
 notebooks = [
