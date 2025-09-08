@@ -5,7 +5,11 @@ from typing import TYPE_CHECKING
 
 from qiskit import transpile
 from qiskit_ibm_runtime import QiskitRuntimeService, SamplerV2 as Sampler
-from typing_extensions import Self
+
+try:
+    from typing import Self
+except ImportError:
+    from typing_extensions import Self
 
 from .backend_adapter import BackendAdapter
 

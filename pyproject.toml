@@ -21,6 +21,7 @@ dependencies = [
   "qiskit-ibm-runtime>=0.40",
   "python-dotenv>=1.0",
   "qiskit-ionq",      
+  "typing_extensions>=4.7; python_version<'3.11'"
 ]
 
 keywords = ["quantum", "qiskit", "quantum-computing", "runtime", "resource-aware", "nisq"]

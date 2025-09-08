@@ -5,7 +5,11 @@ from functools import cached_property
 from typing import TYPE_CHECKING
 
 from qiskit_ionq import IonQProvider
-from typing_extensions import Self
+
+try:
+    from typing import Self
+except ImportError:
+    from typing_extensions import Self
 
 from .backend_adapter import BackendAdapter
 
