@@ -9,7 +9,7 @@ description = "Qonscious is a runtime framework designed to support conditional 
 authors = [
     { name = "Alejandro Fernandez", email = "casco@lifia.info.unlp.edu.ar" },
     { name = "Federico Holik", email = "holik@fisica.unlp.edu.ar" },
-    { name = "MArcos Lammers", email = "mlammers@lifia.info.unlp.edu.ar" }
+    { name = "Marcos Lammers", email = "mlammers@lifia.info.unlp.edu.ar" }
 ]
 readme = "README.md"
 license = { file = "LICENSE" } 
@@ -22,6 +22,25 @@ dependencies = [
   "python-dotenv>=1.0",
   "qiskit-ionq",      
 ]
+
+keywords = ["quantum", "qiskit", "quantum-computing", "runtime", "resource-aware", "nisq"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering",
+]
+
+[project.urls]
+Homepage = "https://github.com/lifia-unlp/qonscious"
+Repository = "https://github.com/lifia-unlp/qonscious"
+Issues = "https://github.com/lifia-unlp/qonscious/issues"
+Documentation = "https://lifia-unlp.github.io/qonscious/"
 
 # load these with `pip install .[dev]` or `pip install .[notebooks]` or `pip install .[viz]` or `pip install .[docs]`
 [project.optional-dependencies] 
