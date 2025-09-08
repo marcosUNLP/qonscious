@@ -35,7 +35,7 @@ jobs:
         run: |
           pip install -e .[dev]
           ruff --version
-          ruff check .
+          ruff check src/qonscious
           pytest -q 
 
       - name: Build sdist and wheel
