@@ -1,18 +1,20 @@
 [![CI](https://github.com/lifia-unlp/qonscious/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/lifia-unlp/qonscious/actions/workflows/ci.yml)
 
-**Qonscious** is a runtime framework designed to support conditional execution of quantum circuits based on resource introspection. It helps you build quantum applications that are aware of backend conditions — such as entanglement, coherence, or fidelity — before execution.
+**Qonscious** is a runtime framework designed to support the conditional execution of quantum circuits based on resource introspection. It helps you build quantum applications that are aware of backend conditions — such as entanglement, coherence, or fidelity — before execution.
 
 ## Why Qonscious?
 
 In the NISQ era, quantum hardware is noisy, resource-limited, and variable over time. Static resource assumptions lead to unreliable results. **Qonscious** makes quantum programs introspective and adaptive.
 
-For a deeper discusion on the motivation behind Qonscious, read [our article](https://arxiv.org/html/2508.19276v1)
+For a deeper discussion on the motivation behind Qonscious, read [our article](https://arxiv.org/html/2508.19276v1)
 
 ## Key Features
 
-- Figures of Merit evaluation (e.g., get CHSH score)
+- Figures of Merit evaluation (e.g., get CHSH score, T1, T2, ...)
 - Conditional execution on compliance with figures of merit checks
-- Inversion of control: pass a callback, not a circuit
+- One circuit, many backends: abstract backends and hide complexity behind adaptors (currently available for SampleV2, Aer Simulator, IBM Backends, IBM Simulators, IONQ backends)
+- Inversion of control: pass a callback, not only a circuit
+- Rich, uniform results from all backends, including backend configuration, and any figures of merit you need as conditional context
 - Built-in logging, extensibility, and fallback logic
 
 ## Use cases
@@ -21,7 +23,7 @@ These are some scenarios where you may use Qonscious:
 
 - Run a circuit conditional on your target computer (or simulator) checking some figures of merit (e.g., number of qubits, CHSH score, etc.)
 - Benchmark a computer (or simulator) in terms of a collection of figures of merit.
-- Explore correlations between experiment results and figures of merit of a gicen computer (or simulator)
+- Explore correlations between experiment results and figures of merit of a given computer (or simulator)
 - ...
 
 ## Setting up dependencies
@@ -36,14 +38,14 @@ We recommend working in a Python virtual environment. The following snippet of c
 python -m venv .venv 
 source .venv/bin/activate
 pip install -U pip wheel
-pip install -e ".[dev,notebooks,viz,docs]" # you can leave notebooks and viz out of you are only working on the framework.
+pip install -e ".[dev,notebooks,viz,docs]" # you can leave notebooks and viz out if you are only working on the framework.
 ```
 
-The **-e flag** in pip install tells pip to install Qonscious as a dependency so you can import from any Jupyter notebook working on the same venv while lettig you edit the framework.
+The **-e flag** in pip install tells pip to install Qonscious as a dependency so you can import from any Jupyter notebook working on the same venv while letting you edit the framework.
 
 ## Documentation
 
-Up to date documentation is available on [github pages](https://lifia-unlp.github.io/qonscious/)
+Up-to-date documentation is available on [github pages](https://lifia-unlp.github.io/qonscious/)
 
 ## Examples
 
@@ -61,7 +63,7 @@ There is a _vscode_example_settings.json file that you can rename to .vscode/set
 
 pyproject.toml includes default configurations for ruff (linting, etc.). Ruff is part of the [dev] dependencies.
 
-To use ruff from the command line (and let ruff format, and tidy up code),  do as follows:
+To use ruff from the command line (and let ruff format and tidy up code),  do as follows:
 
 ```python
 ruff check . --fix
