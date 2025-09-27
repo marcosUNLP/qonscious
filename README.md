@@ -26,54 +26,19 @@ These are some scenarios where you may use Qonscious:
 - Explore correlations between experiment results and figures of merit of a given computer (or simulator)
 - ...
 
-## Setting up dependencies
-
-This project is organized with a pyproject.toml file, so there is no longer a need for a requirements.txt file.
-
-Python version is set in .python-version
-
-We recommend working in a Python virtual environment. The following snippet of code provides examples of most of the tasks you'll need to complete. 
-
-```bash
-python -m venv .venv 
-source .venv/bin/activate
-pip install -U pip wheel
-pip install -e ".[dev,notebooks,viz,docs]" # you can leave notebooks and viz out if you are only working on the framework.
-```
-
-The **-e flag** in pip install tells pip to install Qonscious as a dependency so you can import from any Jupyter notebook working on the same venv while letting you edit the framework.
-
-## Documentation
-
-Up-to-date documentation is available on [github pages](https://lifia-unlp.github.io/qonscious/)
-
 ## Examples
 
 The notebooks folder contains several examples of using Qonscious in different use cases. 
 
 We suggest you start with **chsh_test_demo.ipynb**
 
-# Development notes
+## Documentation
 
-## VisualStudio Code
+Up-to-date documentation is available on [github pages](https://lifia-unlp.github.io/qonscious/)
 
-There is a _vscode_example_settings.json file that you can rename to .vscode/settings.json . It provides most default settings that help VSC find tests, work with notebooks, etc. 
 
-## ruff
 
-pyproject.toml includes default configurations for ruff (linting, etc.). Ruff is part of the [dev] dependencies.
 
-To use ruff from the command line (and let ruff format and tidy up code),  do as follows:
 
-```python
-ruff check . --fix
-ruff format .
-```
-
-## pyright
-
-This project uses pyright as a typechecker (In VSCode it will work via PyLance).
-
-Settings are defined in pyrightconfig.json
 
 
