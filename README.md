@@ -31,7 +31,7 @@ These are some scenarios where you may use Qonscious:
 We encourage installing Qiskit via pip to make sure you have the latest released version:
 
 ````
-pip install qiskit
+pip install qonscious
 ````
 
 If you preffer working on the source code (or you'd like to contribute to the development of Qonscious read the [instructions for contributos](CONTRIBUTING.md))
