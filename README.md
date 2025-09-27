@@ -2,13 +2,13 @@
 
 **Qonscious** is a runtime framework designed to support the conditional execution of quantum circuits based on resource introspection. It helps you build quantum applications that are aware of backend conditions — such as entanglement, coherence, or fidelity — before execution.
 
-## Why Qonscious?
+# Why Qonscious?
 
 In the NISQ era, quantum hardware is noisy, resource-limited, and variable over time. Static resource assumptions lead to unreliable results. **Qonscious** makes quantum programs introspective and adaptive.
 
 For a deeper discussion on the motivation behind Qonscious, read [our article](https://arxiv.org/html/2508.19276v1)
 
-## Key Features
+# Key Features
 
 - Figures of Merit evaluation (e.g., get CHSH score, T1, T2, ...)
 - Conditional execution on compliance with figures of merit checks
@@ -17,7 +17,7 @@ For a deeper discussion on the motivation behind Qonscious, read [our article](h
 - Rich, uniform results from all backends, including backend configuration, and any figures of merit you need as conditional context
 - Built-in logging, extensibility, and fallback logic
 
-## Use cases
+# Use cases
 
 These are some scenarios where you may use Qonscious:
 
@@ -26,13 +26,23 @@ These are some scenarios where you may use Qonscious:
 - Explore correlations between experiment results and figures of merit of a given computer (or simulator)
 - ...
 
-## Examples
+# Installation
 
-The notebooks folder contains several examples of using Qonscious in different use cases. 
+We encourage installing Qiskit via pip to make sure you have the latest released version:
+
+````
+pip install qiskit
+````
+
+If you preffer working on the source code (or you'd like to contribute to the development of Qonscious read the [instructions for contributos](CONTRIBUTING.md))
+
+# Examples
+
+The [notebooks](./notebooks/) folder contains several examples of using Qonscious in different use cases. 
 
 We suggest you start with **chsh_test_demo.ipynb**
 
-## Documentation
+# Documentation
 
 Up-to-date documentation is available on [github pages](https://lifia-unlp.github.io/qonscious/)
 
