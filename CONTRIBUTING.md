@@ -76,7 +76,7 @@ ruff format .
 
 Make sure that any extensions/improvement/changes you contribute are covered by unit tests.
 
-Mark test methods that interact with IBM's backend (thus requiring a token) with the annotation `@pytest.mark.ibm_token_required`
+Mark test methods that interact with IBM's backend (thus requiring a token) with the annotation `@pytest.mark.ibm_token_required` or `@pytest.mark.ionq_apikey_required` if they interact with IONQ's backend. 
 
 Use:
 * `pytest` : to run all tests
