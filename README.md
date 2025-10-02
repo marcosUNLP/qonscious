@@ -40,7 +40,7 @@ If you preffer working on the source code (or you'd like to contribute to the de
 
 The [notebooks](./notebooks/) folder contains several examples of using Qonscious in different use cases. 
 
-We suggest you start with **chsh_test_demo.ipynb**
+We suggest you start with **chsh_test_demo.ipynb** which is also available as a [Google Colab Notebook)[https://colab.research.google.com/drive/1tCTBrpzUH6uqZHWCY5nXOtXAv9bBfHXd?usp=sharing]. There is even a [youtube tutorial](https://www.youtube.com/watch?v=mNkhzWlUE0g) covering this specific usage example.  
 
 # Documentation
 
