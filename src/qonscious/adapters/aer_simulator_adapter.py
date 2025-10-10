@@ -13,7 +13,7 @@ from qiskit import QuantumCircuit, transpile
 from qiskit_aer import AerSimulator
 from qiskit_ibm_runtime import QiskitRuntimeService
 
-from .base_sampler_adapter import BaseSamplerAdapter
+from .backend_adapter import BackendAdapter
 
 if TYPE_CHECKING:
     from qiskit_aer.backends.backendconfiguration import AerBackendConfiguration
@@ -22,7 +22,7 @@ if TYPE_CHECKING:
     from qonscious.results.result_types import ExperimentResult
 
 
-class AerSimulatorAdapter(BaseSamplerAdapter):
+class AerSimulatorAdapter(BackendAdapter):
     def __init__(self, simulator: AerSimulator, qubits_properties: list):
         self.simulator = simulator or AerSimulator()
         self.qubits_properties = qubits_properties
