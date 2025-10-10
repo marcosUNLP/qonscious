@@ -46,6 +46,8 @@ We suggest you start with **chsh_test_demo.ipynb** which is also available as a 
 
 Up-to-date documentation is available on [github pages](https://lifia-unlp.github.io/qonscious/)
 
+The API reference's [home page](https://lifia-unlp.github.io/qonscious/reference/) provides a good overview of all important elements and their relationships. 
+
 
 
 
