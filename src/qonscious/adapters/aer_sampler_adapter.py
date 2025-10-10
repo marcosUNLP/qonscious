@@ -1,14 +1,22 @@
 from __future__ import annotations
 
 import math
+from datetime import datetime, timezone
+from typing import TYPE_CHECKING
 
 import psutil
+from qiskit.primitives.containers import BitArray
 from qiskit_aer.primitives import SamplerV2 as Sampler
 
-from .base_sampler_adapter import BaseSamplerAdapter
+from .backend_adapter import BackendAdapter
+
+if TYPE_CHECKING:
+    from qiskit import QuantumCircuit
+
+    from qonscious.results.result_types import ExperimentResult
 
 
-class AerSamplerAdapter(BaseSamplerAdapter):
+class AerSamplerAdapter(BackendAdapter):
     def __init__(self, sampler: Sampler | None = None):
         self.sampler = sampler or Sampler()
 
@@ -29,3 +37,27 @@ class AerSamplerAdapter(BaseSamplerAdapter):
         "In an aer simulator, there is no limit on the t2."
         "It could be different if we include a noise model"
         return {qubit: float("inf") for qubit in range(self.n_qubits)}
+
+    def run(self, circuit: QuantumCircuit, **kwargs) -> ExperimentResult:
+        shots = kwargs.get("shots", 1024)
+        created = datetime.now(timezone.utc).isoformat()
+        job = self.sampler.run(pubs=[circuit], shots=shots)
+        running = datetime.now(timezone.utc).isoformat()
+        result = job.result()[0]
+        finished = datetime.now(timezone.utc).isoformat()
+
+        raw = result.join_data()
+        arr = raw.astype("uint8", copy=False) if not isinstance(raw, BitArray) else raw.array
+        counts = BitArray(arr, circuit.num_clbits).get_counts()
+
+        return {
+            "counts": counts,
+            "shots": shots,
+            "backend_properties": {"name": "qiskit_aer.primitives.SamplerV2"},
+            "timestamps": {
+                "created": created,
+                "running": running,
+                "finished": finished,
+            },
+            "raw_results": job.result(),
+        }
