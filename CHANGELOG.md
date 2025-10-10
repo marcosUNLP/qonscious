@@ -4,21 +4,19 @@ Example content to imitate
 All notable changes to this project will be documented in this file.
 The format is based on Keep a Changelog and this project adheres to Semantic Versioning.
 
-## [0.0.1] - 2025-09-02
+## [0.1.2] - 2025-10-10
 
-First version that shows all of Qonscions in a clear and almost mature way.
-APIs and desing will still be changed. 
+Simulator adaptor now effectively uses the simulation backends
 
 ### Added
-- Documentation that is deployed automatically to github pages
+- Nothing
 
 ### Changed
-- Package organization was improved with learnability in mind
+- Abstract BaseSamplerAdapter class is no longer needed/available
 
 ### Fixed
-- Few bugs.
+- AerSimulatorAdapter was not using teh simulation backends.
 
 ### Comming
-- Document result types
-- Actions can be chained (thus, we would get a collection of QuonsciousResults)
+- N/A
 
