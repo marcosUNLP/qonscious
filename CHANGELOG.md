@@ -4,18 +4,18 @@ Example content to imitate
 All notable changes to this project will be documented in this file.
 The format is based on Keep a Changelog and this project adheres to Semantic Versioning.
 
-## [0.1.2] - 2025-10-10
+## [0.1.3] - 2025-10-10
 
-Simulator adaptor now effectively uses the simulation backends
-
+minor fixes
 ### Added
 - Nothing
 
 ### Changed
-- Abstract BaseSamplerAdapter class is no longer needed/available
+- Reorganized CHSH demo
 
 ### Fixed
-- AerSimulatorAdapter was not using teh simulation backends.
+- missing export
+
 
 ### Comming
 - N/A
