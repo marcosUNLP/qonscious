@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.10", "3.11", "3.12"]
+        python-version: ["3.10", "3.11"]
 
     env:
       IBM_QUANTUM_TOKEN: ${{ secrets.IBM_QUANTUM_TOKEN }}
@@ -68,14 +68,6 @@ jobs:
           else
             echo "repo=pypi" >> $GITHUB_OUTPUT
           fi
-
-      - name: Publish to TestPyPI
-        if: steps.repo.outputs.repo == 'testpypi'
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.TEST_PYPI_API_TOKEN }}
-        run: |
-          python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 
       - name: Publish to PyPI
         if: steps.repo.outputs.repo == 'pypi'
