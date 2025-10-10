@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import datetime, timezone
 from functools import cached_property
 from typing import TYPE_CHECKING
 
@@ -10,7 +11,6 @@ except ImportError:
 
 from qiskit import QuantumCircuit, transpile
 from qiskit_aer import AerSimulator
-from qiskit_aer.primitives import SamplerV2 as Sampler
 from qiskit_ibm_runtime import QiskitRuntimeService
 
 from .base_sampler_adapter import BaseSamplerAdapter
@@ -19,10 +19,11 @@ if TYPE_CHECKING:
     from qiskit_aer.backends.backendconfiguration import AerBackendConfiguration
     from qiskit_aer.backends.backendproperties import AerBackendProperties
 
+    from qonscious.results.result_types import ExperimentResult
+
 
 class AerSimulatorAdapter(BaseSamplerAdapter):
-    def __init__(self, sampler: Sampler, simulator: AerSimulator, qubits_properties: list):
-        self.sampler = sampler or Sampler()
+    def __init__(self, simulator: AerSimulator, qubits_properties: list):
         self.simulator = simulator or AerSimulator()
         self.qubits_properties = qubits_properties
 
@@ -31,7 +32,6 @@ class AerSimulatorAdapter(BaseSamplerAdapter):
         service = QiskitRuntimeService(channel="ibm_quantum_platform", token=token)
         backend_to_simulate = service.backend(backend_name)
         return cls(
-            Sampler(),
             AerSimulator.from_backend(backend_to_simulate),
             [
                 backend_to_simulate.properties().qubit_property(i)
@@ -61,3 +61,26 @@ class AerSimulatorAdapter(BaseSamplerAdapter):
     @property
     def t2s(self) -> dict[int, float]:
         return {i: self.qubits_properties[i]["T2"][0] for i in range(len(self.qubits_properties))}
+
+    def run(self, circuit: QuantumCircuit, **kwargs) -> ExperimentResult:
+        shots = kwargs.get("shots", 1024)
+        created = datetime.now(timezone.utc).isoformat()
+        transpiled_circuit = self.transpile(circuit)
+        job = self.simulator.run(transpiled_circuit, shots=shots)
+        running = datetime.now(timezone.utc).isoformat()
+        result = job.result()
+        finished = datetime.now(timezone.utc).isoformat()
+
+        counts = result.get_counts(transpiled_circuit)
+
+        return {
+            "counts": counts,
+            "shots": shots,
+            "backend_properties": {"name": "qiskit_aer.primitives.SamplerV2"},
+            "timestamps": {
+                "created": created,
+                "running": running,
+                "finished": finished,
+            },
+            "raw_results": job.result(),
+        }
