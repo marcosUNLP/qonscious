@@ -24,7 +24,7 @@ These are some scenarios where you may use Qonscious:
 - Run a circuit conditional on your target computer (or simulator) checking some figures of merit (e.g., number of qubits, CHSH score, etc.)
 - Benchmark a computer (or simulator) in terms of a collection of figures of merit.
 - Explore correlations between experiment results and figures of merit of a given computer (or simulator)
-- Explore correlations between figures of metir on a given computer (or simulator)
+- Explore correlations between figures of merit on a given computer (or simulator)
 - ...
 
 # Installation
