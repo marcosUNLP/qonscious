@@ -41,13 +41,20 @@ class IonQBackendAdapter(BackendAdapter):
         return cls(provider.get_backend("simulator"))
 
     @classmethod
-    def aria_simulator(cls, api_key) -> Self:
-        """Simply provide your IonQ API key to get an adaptor on the simulator of Aria 1
-        with its noise model."""
+    def simulator_with_model(cls, api_key, model) -> Self:
+        """Give the name of the noise model to simulate."""
         provider = IonQProvider(api_key)
         simulator = provider.get_backend("simulator")
-        simulator.set_options(noise_model="aria-1")
+        simulator.set_options(noise_model=model)
         return cls(simulator)
+
+    @classmethod
+    def aria_simulator(cls, api_key) -> Self:
+        return cls.simulator_with_model(api_key=api_key, model="aria-1")
+
+    @classmethod
+    def harmony_simulator(cls, api_key) -> Self:
+        return cls.simulator_with_model(api_key=api_key, model="harmony")
 
     @cached_property
     def _backend_configuration(self):
@@ -78,6 +85,10 @@ class IonQBackendAdapter(BackendAdapter):
         raise Exception("Not yet implemented")
         n_qubits = self._backend_configuration.n_qubits
         return {i: self._backend_properties.t2(i) for i in range(n_qubits)}
+
+    @property
+    def name(self) -> str:
+        return self.backend.name
 
     def run(self, circuit: QuantumCircuit, **kwargs) -> ExperimentResult:
         kwargs.setdefault("shots", 1024)
