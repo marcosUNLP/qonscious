@@ -73,6 +73,10 @@ class IBMSamplerAdapter(BackendAdapter):
         n_qubits = self._backend_configuration.n_qubits
         return {i: self._backend_properties.t2(i) for i in range(n_qubits)}
 
+    @property
+    def name(self) -> str:
+        return self.backend.name
+
     def run(self, circuit: QuantumCircuit, **kwargs) -> ExperimentResult:
         kwargs.setdefault("shots", 1024)
         sampler = Sampler(mode=self.backend)

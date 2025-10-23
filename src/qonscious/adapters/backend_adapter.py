@@ -34,3 +34,11 @@ class BackendAdapter(Protocol):
             dict[int, float]: The T2 (dephasing time) for each qubit.
         """
         ...
+
+    @property
+    def name(self) -> str:
+        """
+        Returns:
+            str: The name of the backend.
+        """
+        ...
