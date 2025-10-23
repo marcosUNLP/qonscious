@@ -38,6 +38,10 @@ class AerSamplerAdapter(BackendAdapter):
         "It could be different if we include a noise model"
         return {qubit: float("inf") for qubit in range(self.n_qubits)}
 
+    @property
+    def name(self) -> str:
+        return "SamplerV2"
+
     def run(self, circuit: QuantumCircuit, **kwargs) -> ExperimentResult:
         shots = kwargs.get("shots", 1024)
         created = datetime.now(timezone.utc).isoformat()
