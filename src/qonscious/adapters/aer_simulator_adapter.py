@@ -23,9 +23,10 @@ if TYPE_CHECKING:
 
 
 class AerSimulatorAdapter(BackendAdapter):
-    def __init__(self, simulator: AerSimulator, qubits_properties: list):
+    def __init__(self, simulator: AerSimulator, qubits_properties: list, backend_name: str):
         self.simulator = simulator or AerSimulator()
         self.qubits_properties = qubits_properties
+        self.backend_name = backend_name
 
     @classmethod
     def based_on(cls, token, backend_name) -> Self:
@@ -37,6 +38,7 @@ class AerSimulatorAdapter(BackendAdapter):
                 backend_to_simulate.properties().qubit_property(i)
                 for i in range(backend_to_simulate.configuration().n_qubits)
             ],
+            backend_name,
         )
 
     def transpile(self, circuit: QuantumCircuit) -> QuantumCircuit:
@@ -61,6 +63,10 @@ class AerSimulatorAdapter(BackendAdapter):
     @property
     def t2s(self) -> dict[int, float]:
         return {i: self.qubits_properties[i]["T2"][0] for i in range(len(self.qubits_properties))}
+
+    @property
+    def name(self) -> str:
+        return self.backend_name
 
     def run(self, circuit: QuantumCircuit, **kwargs) -> ExperimentResult:
         shots = kwargs.get("shots", 1024)

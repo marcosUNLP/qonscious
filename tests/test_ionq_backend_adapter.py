@@ -47,3 +47,14 @@ def test_ionq_backend_basic_run():
     assert isinstance(timestamps, dict)
     assert all(k in timestamps for k in ("created", "running", "finished"))
     assert all(isinstance(timestamps[k], str) for k in timestamps)
+
+
+@pytest.mark.ionq_apikey_required
+def test_simulator_constructors():
+    api_key = os.getenv("IONQ_API_KEY")
+    adapter = IonQBackendAdapter.aria_simulator(api_key)
+    assert adapter.backend.name == "ionq_simulator"
+    assert adapter.n_qubits == 29
+    adapter = IonQBackendAdapter.harmony_simulator(api_key)
+    assert adapter.backend.name == "ionq_simulator"
+    assert adapter.n_qubits == 29

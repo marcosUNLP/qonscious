@@ -29,6 +29,22 @@ class IBMSamplerAdapter(BackendAdapter):
         service = QiskitRuntimeService(channel="ibm_quantum_platform", token=token)
         return cls(service.least_busy(operational=True, simulator=False))
 
+    @classmethod
+    def backend_named(cls, name, token) -> Self:
+        """Get an adapter on a named backend."""
+        service = QiskitRuntimeService(channel="ibm_quantum_platform", token=token)
+        return cls(service.backend(name=name))
+
+    @classmethod
+    def all_available_backends(
+        cls,
+        token,
+        **kwargs,
+    ) -> list[Self]:
+        """Get a list of adapters to backends available for the account with the provided token."""
+        service = QiskitRuntimeService(channel="ibm_quantum_platform", token=token)
+        return [cls(backend) for backend in service.backends(**kwargs)]
+
     @cached_property
     def _backend_configuration(self):
         "QPU configuration obtained as indicated in https://quantum.cloud.ibm.com/docs/en/guides/get-qpu-information"
@@ -56,6 +72,10 @@ class IBMSamplerAdapter(BackendAdapter):
     def t2s(self) -> dict[int, float]:
         n_qubits = self._backend_configuration.n_qubits
         return {i: self._backend_properties.t2(i) for i in range(n_qubits)}
+
+    @property
+    def name(self) -> str:
+        return self.backend.name
 
     def run(self, circuit: QuantumCircuit, **kwargs) -> ExperimentResult:
         kwargs.setdefault("shots", 1024)
