@@ -17,8 +17,9 @@ if TYPE_CHECKING:
     from qonscious.results.result_types import ExperimentResult, FigureOfMeritResult
 
 MIN_QUBITS = 2  # Grover does not make sense below 2 qubits (N<4)
-class GroverFigureOfMerit(FigureOfMerit):
 
+
+class GroverFigureOfMerit(FigureOfMerit):
     def __init__(
         self,
         num_targets: int,
@@ -33,21 +34,18 @@ class GroverFigureOfMerit(FigureOfMerit):
         self.num_qubits = None if num_qubits is None else int(num_qubits)
         self.targets_int = None if targets_int is None else list(targets_int)
 
-
     def compute_required_shots(self) -> int:
-        return 1000# Future implementation could adapt this based on N, M, R, etc.
+        return 1000  # Future implementation could adapt this based on N, M, R, etc.
 
     def evaluate(self, backend_adapter: BackendAdapter) -> FigureOfMeritResult:
         """Ejecuta Grover con la config de self y devuelve métricas + resultado crudo."""
         search_space, target_bitstrings = self._make_search_space_and_targets(
-            self.num_targets,
-            self.num_qubits,
-            self.targets_int
+            self.num_targets, self.num_qubits, self.targets_int
         )
-        M = len(target_bitstrings)                                # Lenght of targets
-        n = len(target_bitstrings[0]) if M > 0 else 1             # Effective Qbits e.g. "000" = 3
-        N = len(search_space)                                     # Search space size
-        R = self._optimal_rounds(N, M)                            # Optimal Grover iterations
+        M = len(target_bitstrings)  # Lenght of targets
+        n = len(target_bitstrings[0]) if M > 0 else 1  # Effective Qbits e.g. "000" = 3
+        N = len(search_space)  # Search space size
+        R = self._optimal_rounds(N, M)  # Optimal Grover iterations
         calc_shots = self.compute_required_shots()
         qc = self._build_grover_circuit(n, target_bitstrings, R)
 
@@ -61,10 +59,7 @@ class GroverFigureOfMerit(FigureOfMerit):
         )
         # Score calculation
         metrics = self._compute_score(
-            counts,
-            target_bitstrings,
-            calc_shots, self.lambda_factor,
-            self.mu_factor
+            counts, target_bitstrings, calc_shots, self.lambda_factor, self.mu_factor
         )
 
         # Packaging result
@@ -102,7 +97,6 @@ class GroverFigureOfMerit(FigureOfMerit):
         num_qubits: int | None,
         targets_int: list[int] | None,
     ) -> tuple[list[int], list[str]]:
-
         # --- Elegir n (qubits) y N (tamaño del espacio) ---
         if num_qubits is not None:
             n = int(num_qubits)
@@ -136,7 +130,7 @@ class GroverFigureOfMerit(FigureOfMerit):
             chosen = list(targets_int)
             for t in chosen:
                 if not (0 <= t < N):
-                    raise ValueError(f"target out of range: {t} ∉ [0,{N-1}]")
+                    raise ValueError(f"target out of range: {t} ∉ [0,{N - 1}]")
 
         # --- Formatear objetivos a bitstrings de ancho n ---
         targets_binary = [format(t, f"0{n}b") for t in chosen]
@@ -147,7 +141,7 @@ class GroverFigureOfMerit(FigureOfMerit):
         qc = QuantumCircuit(n, name="Oracle")
         tgt = n - 1
         for bitstr in marked:
-            bits_le = list(reversed(bitstr))#cambio de endian
+            bits_le = list(reversed(bitstr))  # cambio de endian
             zeros = [i for i, b in enumerate(bits_le) if b == "0"]
             for i in zeros:
                 qc.x(i)
@@ -176,10 +170,10 @@ class GroverFigureOfMerit(FigureOfMerit):
         return dq
 
     def _optimal_rounds(self, N: int, M: int) -> int:
-        R = math.floor((math.pi / 4) * math.sqrt(N/M))
+        R = math.floor((math.pi / 4) * math.sqrt(N / M))
         return max(0, R)
-    def _compute_score(
 
+    def _compute_score(
         self,
         counts: dict[str, int],
         targets: list[str],
@@ -190,7 +184,7 @@ class GroverFigureOfMerit(FigureOfMerit):
         if shots <= 0:
             return {"score": 0.0, "P_T": 0.0, "sigma_T": 0.0, "P_N": 1.0}
         P = {s: c / shots for s, c in counts.items()}
-        #calcular
+        # calcular
         P_T = sum(P.get(s, 0.0) for s in targets)
         P_N = 1.0 - P_T
         M = len(targets)
