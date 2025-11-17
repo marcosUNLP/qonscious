@@ -43,10 +43,9 @@ In the current phase of development, the design of Qonscious will change often. 
    - Feature: MINOR
    - Bugfix: PATCH
 4. Update version in toml file
-5. Tag for TestPyPI (optional): `git tag vX.Y.Z-rc.1 && git push origin vX.Y.Z-rc.1`
-6. Verify installation from TestPyPI.
-7. Tag final: `git tag vX.Y.Z && git push origin vX.Y.Z`
-8. Create GitHub Release and paste CHANGELOG entries.
+5. Commit those changes (do not yet push)
+6. Tag: `git tag vX.Y.Z && git push origin vX.Y.Z`
+7. Push to main (upon seeing the new tag, the action will release the new version to PiPy)
 
 Git: use v prefix for clarity: e.g., v0.1.0.
 
