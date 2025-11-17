@@ -4,6 +4,11 @@ Example content to imitate
 All notable changes to this project will be documented in this file.
 The format is based on Keep a Changelog and this project adheres to Semantic Versioning.
 
+## [0.1.4] - 2025-11-17
+
+- added Grover FOM
+- added notebook with example of Grover FOM
+
 ## [0.1.3] - 2025-10-10
 
 minor fixes
