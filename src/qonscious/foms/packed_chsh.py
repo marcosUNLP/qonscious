@@ -62,7 +62,7 @@ def compute_parallel_CHSH_scores(counts: dict) -> dict:
     pair_counts = [defaultdict(int) for _ in range(4)]
 
     for bitstring, count in counts.items():
-        bits = bitstring[::-1]  # little-endian
+        bits = bitstring[::-1]
         for i in range(4):
             a = bits[2 * i]
             b = bits[2 * i + 1]
