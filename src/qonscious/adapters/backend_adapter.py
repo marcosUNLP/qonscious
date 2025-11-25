@@ -23,7 +23,7 @@ class BackendAdapter(Protocol):
     def t1s(self) -> dict[int, float] | None:
         """
         Returns:
-            dict[int, float] | None: The T1 (relaxation time) for each qubit, 
+            dict[int, float] | None: The T1 (relaxation time) for each qubit,
             or None if not available.
         """
         ...
