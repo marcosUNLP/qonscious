@@ -1,8 +1,7 @@
-import sys
-import os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../src'))
+from __future__ import annotations
 
 from typing import TYPE_CHECKING
+
 from qonscious.adapters.aer_sampler_adapter import AerSamplerAdapter
 from qonscious.foms.packed_chsh import PackedCHSHTest
 
@@ -23,15 +22,8 @@ def test_packed_chsh_constraint_passes():
 
     # Check expected keys
     props = result.get("properties")
-    assert props is not None and isinstance(props, dict)
+    assert props is not None and isinstance(props, dict)  # narrows type for Pyright
     assert all(k in props for k in ("E00", "E01", "E10", "E11", "score"))
 
     # Evaluate the result
     assert result["properties"]["score"] > 2
-
-    print(f"CHSH score: {result['properties']['score']:.4f} → hubo violación!")
-
-
-if __name__ == "__main__":
-    test_packed_chsh_constraint_passes()
-    print("TEST PASADO CORRECTAMENTE")
