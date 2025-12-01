@@ -3,6 +3,7 @@ from .aer_simulator_adapter import AerSimulatorAdapter
 from .backend_adapter import BackendAdapter
 from .ibm_sampler_adapter import IBMSamplerAdapter
 from .ionq_backend_adapter import IonQBackendAdapter
+from .quafu_backend_adapter import QuafuBackendAdapter
 
 __all__ = [
     "BackendAdapter",
@@ -10,4 +11,5 @@ __all__ = [
     "IonQBackendAdapter",
     "AerSimulatorAdapter",
     "IBMSamplerAdapter",
+    "QuafuBackendAdapter",
 ]

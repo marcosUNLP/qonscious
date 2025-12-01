@@ -20,18 +20,20 @@ class BackendAdapter(Protocol):
         ...
 
     @property
-    def t1s(self) -> dict[int, float]:
+    def t1s(self) -> dict[int, float] | None:
         """
         Returns:
-            dict[int, float]: The T1 (relaxation time) for each qubit.
+            dict[int, float] | None: The T1 (relaxation time) for each qubit,
+            or None if not available.
         """
         ...
 
     @property
-    def t2s(self) -> dict[int, float]:
+    def t2s(self) -> dict[int, float] | None:
         """
         Returns:
-            dict[int, float]: The T2 (dephasing time) for each qubit.
+            dict[int, float] | None: The T2 (dephasing time) for each qubit,
+            or None if not available.
         """
         ...
 
