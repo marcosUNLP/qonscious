@@ -56,7 +56,7 @@ We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) (f
 
 ## Setting up dependencies
 
-This project is organized with a pyproject.toml file, so there is no longer a need for a requirements.txt file.
+This project is organized with a [pyproject.toml](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/) file, so there is no longer a need for a requirements.txt file.
 
 Python version is set in .python-version
 
@@ -98,10 +98,10 @@ Mark test methods that interact with IBM's backend (thus requiring a token) with
 
 Use:
 * `pytest` : to run all tests
-* `pytest -m "not (ibm_token_required or ionq_apikey_required)"` : to only run tests that to not interact with IBM's or IONQ`sbackend
+* `pytest -m "not (ibm_token_required or ionq_apikey_required)"` : to only run tests that to not interact with IBM's or IONQ`s or QUAFU's backend
 * `pytest -m "ibm_token_required"` : to only run tests that that do interact with IBM's backend
 * `pytest -m "ionq_apikey_required"` : to only run tests that that do interact with IONQ'S backend
-
+* `pytest -m "quafu_apikey_required"` : to only run tests that that do interact with QUAFU's backend
 
 ## VisualStudio Code
 
